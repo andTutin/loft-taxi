@@ -34,7 +34,7 @@ function App() {
           setActivePage,
         }}
       >
-        <div className="App">
+        <div className="App" style={{height: '100vh'}}>
           {
             {
               login: <LoginPage />,

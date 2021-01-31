@@ -5,7 +5,6 @@ const ProfilePage = () => {
   return (
     <>
       <Header />
-      <h1>Future Profile Page</h1>
     </>
   );
 };
