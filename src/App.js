@@ -1,23 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import ProfilePage from "./pages/ProfilePage";
+import LoginPage from "./pages/LoginPage";
+import MapPage from "./pages/MapPage";
+import RegistrationPage from "./pages/RegistrationPage";
+import "./App.css";
 
 function App() {
+  const [loginSatus, setLoginStatus] = useState(false);
+  const [activePage, setActivePage] = useState(loginSatus ? "map" : "login");
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {
+        {
+          login: (
+            <LoginPage
+              setLoginStatus={setLoginStatus}
+              changePage={setActivePage}
+            />
+          ),
+          registration: (
+            <RegistrationPage
+              setLoginStatus={setLoginStatus}
+              changePage={setActivePage}
+            />
+          ),
+          map: (
+            <MapPage
+              setLoginStatus={setLoginStatus}
+              changePage={setActivePage}
+            />
+          ),
+          profile: (
+            <ProfilePage
+              setLoginStatus={setLoginStatus}
+              changePage={setActivePage}
+            />
+          ),
+        }[activePage]
+      }
     </div>
   );
 }
