@@ -13,7 +13,7 @@ const LoginPage = () => {
       <LeftLogo />
       <div
         style={{
-          flex: "3",
+          flex: "2",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
