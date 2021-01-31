@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import AuthContext from "../ctxs/authContext";
+import RouteContext from "../ctxs/routeContext";
 import LeftLogo from "../components/LeftLogo";
 import bg from "../bg-auth.jpg";
 
-const RegistrationPage = ({ setLoginStatus, changePage }) => {
-  const navigateTo = (e, page) => {
-    e.preventDefault();
-    changePage(page);
-  };
+const RegistrationPage = () => {
+  const { login } = useContext(AuthContext);
+  const { setActivePage } = useContext(RouteContext);
 
   return (
     <div style={{ width: "100vw", height: "100vh", display: "flex" }}>
@@ -19,6 +19,7 @@ const RegistrationPage = ({ setLoginStatus, changePage }) => {
           alignItems: "center",
           justifyContent: "center",
           background: `url(${bg})`,
+          backgroundSize: "cover",
         }}
       >
         <div
@@ -31,8 +32,8 @@ const RegistrationPage = ({ setLoginStatus, changePage }) => {
         >
           <form
             onSubmit={(e) => {
-              setLoginStatus(true);
-              navigateTo(e, "map");
+              e.preventDefault();
+              login();
             }}
           >
             <h2>Регистрация</h2>
@@ -64,7 +65,13 @@ const RegistrationPage = ({ setLoginStatus, changePage }) => {
 
           <div>
             <p>Уже зарегистрированы?</p>
-            <a href="/login" onClick={(e) => navigateTo(e, "login")}>
+            <a
+              href="/login"
+              onClick={(e) => {
+                e.preventDefault();
+                setActivePage("login");
+              }}
+            >
               Войти
             </a>
           </div>

@@ -1,10 +1,10 @@
 import React from "react";
 import Header from "../components/Header";
 
-const ProfilePage = ({ setLoginStatus, changePage }) => {
+const ProfilePage = () => {
   return (
     <>
-      <Header setLoginStatus={setLoginStatus} changePage={changePage} />
+      <Header />
       <h1>Future Profile Page</h1>
     </>
   );

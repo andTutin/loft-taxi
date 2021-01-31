@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import AuthContext from "../ctxs/authContext";
+import RouteContext from "../ctxs/routeContext";
 
-const Nav = ({ setLoginStatus, changePage }) => {
-  const navigateTo = (e, page) => {
-    e.preventDefault();
-    changePage(page);
-  };
+const Nav = () => {
+  const { logout } = useContext(AuthContext);
+  const { setActivePage } = useContext(RouteContext);
 
   return (
     <>
@@ -17,12 +17,24 @@ const Nav = ({ setLoginStatus, changePage }) => {
         }}
       >
         <li>
-          <a href="/map" onClick={(e) => navigateTo(e, "map")}>
+          <a
+            href="/map"
+            onClick={(e) => {
+              e.preventDefault();
+              setActivePage("map");
+            }}
+          >
             Карта
           </a>
         </li>
         <li>
-          <a href="/profile" onClick={(e) => navigateTo(e, "profile")}>
+          <a
+            href="/profile"
+            onClick={(e) => {
+              e.preventDefault();
+              setActivePage("profile");
+            }}
+          >
             Профиль
           </a>
         </li>
@@ -30,8 +42,8 @@ const Nav = ({ setLoginStatus, changePage }) => {
           <a
             href="/login"
             onClick={(e) => {
-              setLoginStatus(false);
-              navigateTo(e, "login");
+              e.preventDefault();
+              logout();
             }}
           >
             Выйти

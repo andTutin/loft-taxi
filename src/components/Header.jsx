@@ -1,7 +1,7 @@
 import React from "react";
 import Nav from "./Nav";
 
-const Header = ({ setLoginStatus, changePage }) => {
+const Header = () => {
   return (
     <div
       style={{
@@ -11,7 +11,7 @@ const Header = ({ setLoginStatus, changePage }) => {
       }}
     >
       <h1>loft taxi logo</h1>
-      <Nav setLoginStatus={setLoginStatus} changePage={changePage} />
+      <Nav />
     </div>
   );
 };

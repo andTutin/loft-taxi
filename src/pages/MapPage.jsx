@@ -1,10 +1,10 @@
 import React from "react";
 import Header from "../components/Header";
 
-const MapPage = ({ setLoginStatus, changePage }) => {
+const MapPage = () => {
   return (
     <>
-      <Header setLoginStatus={setLoginStatus} changePage={changePage} />
+      <Header />
       <h1>Future Map Page</h1>
     </>
   );
