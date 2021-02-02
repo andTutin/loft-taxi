@@ -16,11 +16,16 @@ const LoginForm = () => {
 
   return (
     <Paper>
-      <Typography component="h2" variant="h3" align="center">
+      <Typography
+        component="h2"
+        variant="h3"
+        align="center"
+      >
         Войти
       </Typography>
       <Grid
         component="form"
+        data-testid="login-form"
         container
         direction="column"
         justify="center"

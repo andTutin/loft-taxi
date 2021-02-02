@@ -21,6 +21,7 @@ const RegistrationForm = () => {
       </Typography>
       <Grid
         component="form"
+        data-testid="registration-form"
         container
         direction="column"
         justify="center"
@@ -53,7 +54,7 @@ const RegistrationForm = () => {
           margin="normal"
           fullWidth
           id="password"
-          label="Пароль"
+          label="Придумайте пароль"
           name="password"
           placeholder="*************"
         />
