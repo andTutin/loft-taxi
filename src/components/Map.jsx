@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import Grid from "@material-ui/core/Grid";
 var mapboxgl = require("mapbox-gl/dist/mapbox-gl.js");
 
 mapboxgl.accessToken =
@@ -21,9 +22,15 @@ const Map = () => {
   });
 
   return (
-    <div className="map-wrapper" style={{ flex: "1" }}>
-      <div className="map" ref={mapContainer} style={{ height: "100%" }}></div>
-    </div>
+    <Grid
+      item
+      xs
+      container
+      direction="column"
+      className="map-wrapper"
+    >
+      <Grid component="div" item xs className="map" ref={mapContainer}></Grid>
+    </Grid>
   );
 };
 

@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import AuthContext from "./ctxs/authContext";
 import RouteContext from "./ctxs/routeContext";
-import ProfilePage from "./pages/ProfilePage";
-import LoginPage from "./pages/LoginPage";
-import MapPage from "./pages/MapPage";
-import RegistrationPage from "./pages/RegistrationPage";
-import "./App.css";
+import { CssBaseline } from "@material-ui/core/";
+import { LoginPage, RegistrationPage, MapPage, ProfilePage } from "./pages";
 
 function App() {
   const [loginStatus, setLoginStatus] = useState(false);
   const [activePage, setActivePage] = useState("login");
 
-  const login = (email = 'test@test.com', password = '123123') => {
+  const login = (email = "test@test.com", password = "123123") => {
     setLoginStatus(true);
     setActivePage("map");
   };
@@ -31,10 +28,11 @@ function App() {
     >
       <RouteContext.Provider
         value={{
+          activePage,
           setActivePage,
         }}
       >
-        <div className="App" style={{height: '100vh'}}>
+        <CssBaseline>
           {
             {
               login: <LoginPage />,
@@ -43,7 +41,7 @@ function App() {
               profile: <ProfilePage />,
             }[activePage]
           }
-        </div>
+        </CssBaseline>
       </RouteContext.Provider>
     </AuthContext.Provider>
   );
