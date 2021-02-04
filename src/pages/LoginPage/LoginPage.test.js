@@ -1,15 +1,17 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, cleanup } from "@testing-library/react";
 import LoginPage from "./LoginPage";
 
 describe("LoginPage", () => {
-  test("has logo", () => {
+  beforeEach(() => {
     render(<LoginPage />);
+  });
+
+  it("has logo", () => {
     const logo = screen.getByAltText(/Логотип Лофт Такси/i);
     expect(logo).toBeInTheDocument();
   });
 
-  test("has loginForm", () => {
-    render(<LoginPage />);
+  it("has loginForm", () => {
     const loginForm = screen.getByTestId("login-form");
     expect(loginForm).toBeInTheDocument();
   });

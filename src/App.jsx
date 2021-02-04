@@ -4,9 +4,9 @@ import RouteContext from "./ctxs/routeContext";
 import { CssBaseline } from "@material-ui/core/";
 import { LoginPage, RegistrationPage, MapPage, ProfilePage } from "./pages";
 
-function App() {
+function App({ initialPage = "login" }) {
   const [loginStatus, setLoginStatus] = useState(false);
-  const [activePage, setActivePage] = useState("login");
+  const [activePage, setActivePage] = useState(initialPage);
 
   const login = (email = "test@test.com", password = "123123") => {
     setLoginStatus(true);
