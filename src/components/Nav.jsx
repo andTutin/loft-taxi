@@ -1,44 +1,48 @@
-import React from "react";
+import React, { useContext } from "react";
+import AuthContext from "../ctxs/authContext";
+import RouteContext from "../ctxs/routeContext";
+import { Grid, Button } from "@material-ui/core/";
 
-const Nav = ({ setLoginStatus, changePage }) => {
-  const navigateTo = (e, page) => {
-    e.preventDefault();
-    changePage(page);
+const Nav = () => {
+  const { logout } = useContext(AuthContext);
+  const { activePage, setActivePage } = useContext(RouteContext);
+  const setActiveTab = (page) => {
+    return activePage === page ? { color: "#FDBF5A" } : { color: "#fff" };
   };
 
   return (
-    <>
-      <ul
-        style={{
-          width: "300px",
-          display: "flex",
-          justifyContent: "space-between",
-          listStyleType: "none",
+    <Grid item xs={2} container justify="space-between">
+      <Button
+        href="/map"
+        onClick={(e) => {
+          e.preventDefault();
+          setActivePage("map");
+        }}
+        style={setActiveTab("map")}
+      >
+        Карта
+      </Button>
+      <Button
+        href="/profile"
+        onClick={(e) => {
+          e.preventDefault();
+          setActivePage("profile");
+        }}
+        style={setActiveTab("profile")}
+      >
+        Профиль
+      </Button>
+      <Button
+        style={{ color: "#fff" }}
+        href="/login"
+        onClick={(e) => {
+          e.preventDefault();
+          logout();
         }}
       >
-        <li>
-          <a href="/map" onClick={(e) => navigateTo(e, "map")}>
-            Карта
-          </a>
-        </li>
-        <li>
-          <a href="/profile" onClick={(e) => navigateTo(e, "profile")}>
-            Профиль
-          </a>
-        </li>
-        <li>
-          <a
-            href="/login"
-            onClick={(e) => {
-              setLoginStatus(false);
-              navigateTo(e, "login");
-            }}
-          >
-            Выйти
-          </a>
-        </li>
-      </ul>
-    </>
+        Выйти
+      </Button>
+    </Grid>
   );
 };
 

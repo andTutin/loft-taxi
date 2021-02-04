@@ -1,20 +1,20 @@
 import React from "react";
 import logo from "../logo.svg";
+import { Grid } from "@material-ui/core/";
 
 const LeftLogo = () => {
   return (
-    <div
-      style={{
-        flex: "1",
-        height: "100%",
-        background: "#1C1A19",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+    <Grid
+      item
+      xs={4}
+      container
+      direction="row"
+      justify="center"
+      alignItems="center"
+      style={{ background: "#1C1A19" }}
     >
-      <img src={logo} alt="Логотип Лофт Такси" width="192px" height="228px" />
-    </div>
+      <img src={logo} alt="Логотип Лофт Такси" />
+    </Grid>
   );
 };
 
