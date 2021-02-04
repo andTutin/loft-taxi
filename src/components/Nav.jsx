@@ -1,47 +1,35 @@
 import React, { useContext } from "react";
-import AuthContext from "../ctxs/authContext";
-import RouteContext from "../ctxs/routeContext";
-import { Grid, Button } from "@material-ui/core/";
+import { AuthContext } from "../ctx/authContext";
+import { Link, useHistory } from "react-router-dom";
+import { Grid } from "@material-ui/core/";
 
 const Nav = () => {
   const { logout } = useContext(AuthContext);
-  const { activePage, setActivePage } = useContext(RouteContext);
-  const setActiveTab = (page) => {
-    return activePage === page ? { color: "#FDBF5A" } : { color: "#fff" };
+  const history = useHistory();
+
+  const setStyle = (tab) => {
+    return history.location.pathname === "/" + tab
+      ? { color: "orange", textDecoration: "none" }
+      : { color: "#fff", textDecoration: "none" };
   };
 
   return (
     <Grid item xs={2} container justify="space-between">
-      <Button
-        href="/map"
-        onClick={(e) => {
-          e.preventDefault();
-          setActivePage("map");
-        }}
-        style={setActiveTab("map")}
-      >
+      <Link to="/map" style={setStyle("map")}>
         Карта
-      </Button>
-      <Button
-        href="/profile"
-        onClick={(e) => {
-          e.preventDefault();
-          setActivePage("profile");
-        }}
-        style={setActiveTab("profile")}
-      >
+      </Link>
+      <Link to="/profile" style={setStyle("profile")}>
         Профиль
-      </Button>
-      <Button
-        style={{ color: "#fff" }}
-        href="/login"
+      </Link>
+      <Link
+        style={{ color: "#fff", textDecoration: 'none' }}
+        to="/login"
         onClick={(e) => {
-          e.preventDefault();
           logout();
         }}
       >
         Выйти
-      </Button>
+      </Link>
     </Grid>
   );
 };

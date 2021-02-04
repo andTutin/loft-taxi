@@ -1,18 +1,18 @@
 import React, { useContext } from "react";
-import AuthContext from "../../ctxs/authContext";
-import RouteContext from "../../ctxs/routeContext";
-import {
-  Grid,
-  Paper,
-  Typography,
-  TextField,
-  Button,
-  Link,
-} from "@material-ui/core/";
+import { AuthContext } from "../../ctx/authContext";
+import { Grid, Paper, Typography, TextField, Button } from "@material-ui/core/";
+import { Link, useHistory } from "react-router-dom";
 
 const RegistrationForm = () => {
   const { login } = useContext(AuthContext);
-  const { setActivePage } = useContext(RouteContext);
+  const history = useHistory();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login();
+    setTimeout(() => {
+      history.push("/map");
+    }, 1000);
+  };
 
   return (
     <Paper>
@@ -26,10 +26,7 @@ const RegistrationForm = () => {
         direction="column"
         justify="center"
         alignItems="center"
-        onSubmit={(e) => {
-          e.preventDefault();
-          login();
-        }}
+        onSubmit={handleSubmit}
       >
         <TextField
           variant="standard"
@@ -64,17 +61,7 @@ const RegistrationForm = () => {
         <Grid component="div" container justify="flex-end" alignItems="center">
           <Typography component="p" variant="body1">
             Уже зарегистрированы?&nbsp;
-            <Link
-              color="secondary"
-              href="/login"
-              underline="none"
-              onClick={(e) => {
-                e.preventDefault();
-                setActivePage("login");
-              }}
-            >
-              Войти
-            </Link>
+            <Link to="/login">Войти</Link>
           </Typography>
         </Grid>
       </Grid>

@@ -1,26 +1,22 @@
 import React, { useContext } from "react";
-import AuthContext from "../../ctxs/authContext";
-import RouteContext from "../../ctxs/routeContext";
-import {
-  Grid,
-  Paper,
-  Typography,
-  TextField,
-  Button,
-  Link,
-} from "@material-ui/core/";
+import { AuthContext } from "../../ctx/authContext";
+import { Grid, Paper, Typography, TextField, Button } from "@material-ui/core/";
+import { Link, useHistory } from "react-router-dom";
 
 const LoginForm = () => {
   const { login } = useContext(AuthContext);
-  const { setActivePage } = useContext(RouteContext);
+  const history = useHistory();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login();
+    setTimeout(() => {
+      history.push("/map");
+    }, 1000);
+  };
 
   return (
     <Paper>
-      <Typography
-        component="h2"
-        variant="h3"
-        align="center"
-      >
+      <Typography component="h2" variant="h3" align="center">
         Войти
       </Typography>
       <Grid
@@ -30,10 +26,7 @@ const LoginForm = () => {
         direction="column"
         justify="center"
         alignItems="center"
-        onSubmit={(e) => {
-          e.preventDefault();
-          login();
-        }}
+        onSubmit={handleSubmit}
       >
         <TextField
           variant="standard"
@@ -53,35 +46,13 @@ const LoginForm = () => {
           name="password"
           placeholder="*************"
         />
-        <Grid container justify="flex-end">
-          <Link
-            color="secondary"
-            href="/reset"
-            underline="none"
-            onClick={(e) => {
-              e.preventDefault();
-            }}
-          >
-            Забыли пароль?
-          </Link>
-        </Grid>
         <Button type="submit" fullWidth variant="contained">
           Войти
         </Button>
         <Grid component="div" container justify="flex-end" alignItems="center">
           <Typography component="p" variant="body1">
             Новый пользователь?&nbsp;
-            <Link
-              color="secondary"
-              href="/registration"
-              underline="none"
-              onClick={(e) => {
-                e.preventDefault();
-                setActivePage("registration");
-              }}
-            >
-              Зарегистрируйтесь
-            </Link>
+            <Link to="/registration">Зарегистрируйтесь</Link>
           </Typography>
         </Grid>
       </Grid>
