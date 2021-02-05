@@ -52,7 +52,7 @@ const ProfileForm = () => {
                 label="Имя владельца"
                 name="name"
                 placeholder="PIOTR PERVIY"
-                value={cardName || ""}
+                defaultValue={cardName || ""}
               />
               <TextField
                 variant="standard"
@@ -62,7 +62,7 @@ const ProfileForm = () => {
                 label="Номер карты"
                 name="cardNumber"
                 placeholder="0000 0000 0000 0000"
-                value={cardNumber || ""}
+                defaultValue={cardNumber || ""}
               />
               <TextField
                 variant="standard"
@@ -71,7 +71,7 @@ const ProfileForm = () => {
                 label="MM/YY"
                 name="cardExpiry"
                 placeholder="05/23"
-                value={expiryDate || ""}
+                defaultValue={expiryDate || ""}
               />
               <TextField
                 variant="standard"
@@ -80,7 +80,7 @@ const ProfileForm = () => {
                 label="CVC"
                 name="cardCVC"
                 placeholder="666"
-                value={cvc || ""}
+                defaultValue={cvc || ""}
               />
             </Grid>
             <Grid container direction="column">
