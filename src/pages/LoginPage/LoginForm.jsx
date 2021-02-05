@@ -1,18 +1,20 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../../ctx/authContext";
+import React from "react";
 import { Grid, Paper, Typography, TextField, Button } from "@material-ui/core/";
-import { Link, useHistory } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { postLoginRequest } from "../../redux/actions";
 
 const LoginForm = () => {
-  const { login } = useContext(AuthContext);
-  const history = useHistory();
+  const { loginStatus } = useSelector((state) => state);
+  const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
-    login();
-    setTimeout(() => {
-      history.push("/map");
-    }, 1000);
+    dispatch(postLoginRequest("test@test.com", "123123"));
   };
+
+  if (loginStatus) {
+    return <Redirect to="/map" />;
+  }
 
   return (
     <Paper>

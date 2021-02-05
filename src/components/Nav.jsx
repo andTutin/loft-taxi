@@ -1,16 +1,22 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../ctx/authContext";
+import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Grid } from "@material-ui/core/";
+import { useDispatch } from "react-redux";
+import { logoutButtonPressed } from "../redux/actions";
 
 const Nav = () => {
-  const { logout } = useContext(AuthContext);
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const setStyle = (tab) => {
     return history.location.pathname === "/" + tab
       ? { color: "orange", textDecoration: "none" }
       : { color: "#fff", textDecoration: "none" };
+  };
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    dispatch(logoutButtonPressed());
   };
 
   return (
@@ -22,11 +28,9 @@ const Nav = () => {
         Профиль
       </Link>
       <Link
-        style={{ color: "#fff", textDecoration: 'none' }}
+        style={{ color: "#fff", textDecoration: "none" }}
         to="/login"
-        onClick={(e) => {
-          logout();
-        }}
+        onClick={handleLogout}
       >
         Выйти
       </Link>

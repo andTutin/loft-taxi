@@ -7,14 +7,18 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import { AuthProvider } from "./ctx/authContext";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 ReactDOM.render(
   <React.StrictMode>
     <MuiThemeProvider theme={theme}>
       <AuthProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <Provider store={store}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </Provider>
       </AuthProvider>
     </MuiThemeProvider>
   </React.StrictMode>,
