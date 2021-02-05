@@ -3,6 +3,11 @@ import {
   postLoginFailure,
   postRegistrationSuccess,
   postRegistrationFailure,
+  postCardSuccess,
+  postCardFailure,
+  getCardRequest,
+  getCardSuccess,
+  getCardFailure,
   logout,
 } from "./actions";
 
@@ -32,10 +37,13 @@ export const middleware = (store) => (next) => (action) => {
             })
           );
           store.dispatch(postLoginSuccess(email, data.token));
+
+          store.dispatch(getCardRequest(data.token));
         } else {
           store.dispatch(postLoginFailure(data.error));
         }
-      });
+      })
+      .catch((err) => {});
   }
 
   if (action.type === "POST_REGISTRATION_REQUEST") {
@@ -76,6 +84,60 @@ export const middleware = (store) => (next) => (action) => {
           );
         } else {
           store.dispatch(postRegistrationFailure(data.error));
+        }
+      });
+  }
+
+  if (action.type === "POST_CARD_REQUEST") {
+    const { cardNumber, expiryDate, cardName, cvc, token } = action.payload;
+
+    fetch("https://loft-taxi.glitch.me/card", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify({
+        cardNumber,
+        expiryDate,
+        cardName,
+        cvc,
+        token,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success === true) {
+          store.dispatch(
+            postCardSuccess(cardNumber, expiryDate, cardName, cvc)
+          );
+        } else {
+          store.dispatch(postCardFailure(data.error));
+        }
+      });
+  }
+
+  if (action.type === "GET_CARD_REQUEST") {
+    const { token } = action.payload;
+
+    fetch(`https://loft-taxi.glitch.me/card?token=${token}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data) {
+          store.dispatch(
+            getCardSuccess(
+              data.cardNumber,
+              data.expiryDate,
+              data.cardName,
+              data.cvc
+            )
+          );
+        } else {
+          store.dispatch(getCardFailure(data.error));
         }
       });
   }

@@ -7,6 +7,11 @@ let initialState = {
   surname: user?.surname || null,
   email: session?.email || null,
   token: session?.token || null,
+  isCardFilled: false,
+  cardNumber: null,
+  cardName: null,
+  expiryDate: null,
+  cvc: null,
   error: null,
 };
 
@@ -38,10 +43,38 @@ const reducer = (state = initialState, action) => {
         ...state,
         error: action.payload.error,
       };
+    case "POST_CARD_SUCCESS":
+      return {
+        ...state,
+        isCardFilled: true,
+        cardNumber: action.payload.cardNumber,
+        cardName: action.payload.cardName,
+        expiryDate: action.payload.expiryDate,
+        cvc: action.payload.cvc,
+      };
+    case "POST_CARD_FAILURE":
+      return {
+        ...state,
+        error: action.payload.error,
+      };
+    case "GET_CARD_SUCCESS":
+      return {
+        ...state,
+        isCardFilled: true,
+        cardNumber: action.payload.cardNumber,
+        cardName: action.payload.cardName,
+        expiryDate: action.payload.expiryDate,
+        cvc: action.payload.cvc,
+      };
     case "LOGOUT":
       return {
         ...state,
         loginStatus: false,
+      };
+    case "EDIT_PROFILE":
+      return {
+        ...state,
+        isCardFilled: false,
       };
     default:
       return state;

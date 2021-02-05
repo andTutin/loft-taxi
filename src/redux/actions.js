@@ -60,6 +60,76 @@ export function postRegistrationFailure(error) {
   };
 }
 
+export function postCardRequest(cardNumber, expiryDate, cardName, cvc, token) {
+  return {
+    type: "POST_CARD_REQUEST",
+    payload: {
+      cardNumber,
+      expiryDate,
+      cardName,
+      cvc,
+      token,
+    },
+  };
+}
+
+export function postCardSuccess(cardNumber, expiryDate, cardName, cvc) {
+  return {
+    type: "POST_CARD_SUCCESS",
+    payload: {
+      cardNumber,
+      expiryDate,
+      cardName,
+      cvc,
+    },
+  };
+}
+
+export function postCardFailure(error) {
+  return {
+    type: "POST_CARD_FAILURE",
+    payload: {
+      error,
+    },
+  };
+}
+
+export function getCardRequest(token) {
+  return {
+    type: "GET_CARD_REQUEST",
+    payload: {
+      token,
+    },
+  };
+}
+
+export function getCardSuccess(cardNumber, expiryDate, cardName, cvc) {
+  return {
+    type: "GET_CARD_SUCCESS",
+    payload: {
+      cardNumber,
+      expiryDate,
+      cardName,
+      cvc,
+    },
+  };
+}
+
+export function getCardFailure(error) {
+  return {
+    type: "GET_CARD_FAILURE",
+    payload: {
+      error,
+    },
+  };
+}
+
+export function editProfile() {
+  return {
+    type: "EDIT_PROFILE",
+  };
+}
+
 export function logoutButtonPressed() {
   return {
     type: "LOGOUT_BUTTON_PRESSED",

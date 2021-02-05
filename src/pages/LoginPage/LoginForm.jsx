@@ -9,7 +9,7 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(postLoginRequest("test@test.com", "123123"));
+    dispatch(postLoginRequest("tutin_test@test.com", "123123"));
   };
 
   if (loginStatus) {

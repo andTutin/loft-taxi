@@ -1,12 +1,28 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Grid, Paper, Typography, TextField, Button } from "@material-ui/core/";
 import cardLogo from "../../svg/cardLogo.svg";
 import cardChip from "../../svg/cardChip.svg";
 import cardSystemLogo from "../../svg/cardSystemLogo.svg";
+import { postCardRequest } from "../../redux/actions";
 
 const ProfileForm = () => {
+  const dispatch = useDispatch();
+  const { token, cardNumber, cardName, expiryDate, cvc } = useSelector(
+    (state) => state
+  );
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(
+      postCardRequest(
+        "4815 1623 4242 1961",
+        "08/15",
+        "JOHN LOCKE",
+        "815",
+        token
+      )
+    );
   };
 
   return (
@@ -36,6 +52,7 @@ const ProfileForm = () => {
                 label="Имя владельца"
                 name="name"
                 placeholder="PIOTR PERVIY"
+                value={cardName || ""}
               />
               <TextField
                 variant="standard"
@@ -45,6 +62,7 @@ const ProfileForm = () => {
                 label="Номер карты"
                 name="cardNumber"
                 placeholder="0000 0000 0000 0000"
+                value={cardNumber || ""}
               />
               <TextField
                 variant="standard"
@@ -53,6 +71,7 @@ const ProfileForm = () => {
                 label="MM/YY"
                 name="cardExpiry"
                 placeholder="05/23"
+                value={expiryDate || ""}
               />
               <TextField
                 variant="standard"
@@ -61,19 +80,20 @@ const ProfileForm = () => {
                 label="CVC"
                 name="cardCVC"
                 placeholder="666"
+                value={cvc || ""}
               />
             </Grid>
             <Grid container direction="column">
               <Paper style={{ width: "400px", height: "200px" }}>
                 <Grid container direction="row" justify="space-between">
                   <img src={cardLogo} alt="Логотип Лофт Такси" />
-                  <Typography>05/23</Typography>
+                  <Typography>{expiryDate}</Typography>
                 </Grid>
                 <Grid>
-                  <Typography>0000 0000 0000 0000</Typography>
+                  <Typography>{cardNumber}</Typography>
                 </Grid>
                 <Grid>
-                  <Typography>MR. CARDHOLDER</Typography>
+                  <Typography>{cardName}</Typography>
                 </Grid>
                 <Grid container direction="row" justify="space-between">
                   <img src={cardChip} alt="Логотип Лофт Такси" />
