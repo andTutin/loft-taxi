@@ -1,0 +1,85 @@
+const session = JSON.parse(localStorage.getItem("session"));
+const user = JSON.parse(localStorage.getItem("user"));
+const card = JSON.parse(localStorage.getItem("card"));
+
+let initialState = {
+  loginStatus: session?.loginStatus || false,
+  name: user?.name || null,
+  surname: user?.surname || null,
+  email: session?.email || null,
+  token: session?.token || null,
+  isCardFilled: false,
+  cardNumber: card?.cardNumber || null,
+  cardName: card?.cardName || null,
+  expiryDate: card?.expiryDate || null,
+  cvc: card?.cvc || null,
+  error: null,
+};
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case "POST_LOGIN_SUCCESS":
+      return {
+        ...state,
+        loginStatus: true,
+        email: action.payload.email,
+        token: action.payload.token,
+      };
+    case "POST_LOGIN_FAILURE":
+      return {
+        ...state,
+        error: action.payload.error,
+      };
+    case "POST_REGISTRATION_SUCCESS":
+      return {
+        ...state,
+        loginStatus: true,
+        name: action.payload.name,
+        surname: action.payload.name,
+        email: action.payload.email,
+        token: action.payload.token,
+      };
+    case "POST_REGISTRATION_FAILURE":
+      return {
+        ...state,
+        error: action.payload.error,
+      };
+    case "POST_CARD_SUCCESS":
+      return {
+        ...state,
+        isCardFilled: true,
+        cardNumber: action.payload.cardNumber,
+        cardName: action.payload.cardName,
+        expiryDate: action.payload.expiryDate,
+        cvc: action.payload.cvc,
+      };
+    case "POST_CARD_FAILURE":
+      return {
+        ...state,
+        error: action.payload.error,
+      };
+    case "GET_CARD_SUCCESS":
+      return {
+        ...state,
+        isCardFilled: true,
+        cardNumber: action.payload.cardNumber,
+        cardName: action.payload.cardName,
+        expiryDate: action.payload.expiryDate,
+        cvc: action.payload.cvc,
+      };
+    case "LOGOUT":
+      return {
+        ...state,
+        loginStatus: false,
+      };
+    case "EDIT_PROFILE":
+      return {
+        ...state,
+        isCardFilled: false,
+      };
+    default:
+      return state;
+  }
+};
+
+export default reducer;

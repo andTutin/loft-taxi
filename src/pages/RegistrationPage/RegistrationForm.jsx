@@ -1,18 +1,20 @@
-import React, { useContext } from "react";
-import AuthContext from "../../ctxs/authContext";
-import RouteContext from "../../ctxs/routeContext";
-import {
-  Grid,
-  Paper,
-  Typography,
-  TextField,
-  Button,
-  Link,
-} from "@material-ui/core/";
+import React from "react";
+import { Grid, Paper, Typography, TextField, Button } from "@material-ui/core/";
+import { Link, Redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { postRegistrationRequest } from "../../redux/actions";
 
 const RegistrationForm = () => {
-  const { login } = useContext(AuthContext);
-  const { setActivePage } = useContext(RouteContext);
+  const { loginStatus } = useSelector(state => state);
+  const dispatch = useDispatch();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(postRegistrationRequest("tutin_test@test.com", "123123", 'Andrew', 'Tutin'));
+  };
+
+  if (loginStatus) {
+    return <Redirect to="/map" />;
+  }
 
   return (
     <Paper>
@@ -26,10 +28,7 @@ const RegistrationForm = () => {
         direction="column"
         justify="center"
         alignItems="center"
-        onSubmit={(e) => {
-          e.preventDefault();
-          login();
-        }}
+        onSubmit={handleSubmit}
       >
         <TextField
           variant="standard"
@@ -64,17 +63,7 @@ const RegistrationForm = () => {
         <Grid component="div" container justify="flex-end" alignItems="center">
           <Typography component="p" variant="body1">
             Уже зарегистрированы?&nbsp;
-            <Link
-              color="secondary"
-              href="/login"
-              underline="none"
-              onClick={(e) => {
-                e.preventDefault();
-                setActivePage("login");
-              }}
-            >
-              Войти
-            </Link>
+            <Link to="/login">Войти</Link>
           </Typography>
         </Grid>
       </Grid>
