@@ -1,5 +1,6 @@
 const session = JSON.parse(localStorage.getItem("session"));
 const user = JSON.parse(localStorage.getItem("user"));
+const card = JSON.parse(localStorage.getItem("card"));
 
 let initialState = {
   loginStatus: session?.loginStatus || false,
@@ -8,10 +9,10 @@ let initialState = {
   email: session?.email || null,
   token: session?.token || null,
   isCardFilled: false,
-  cardNumber: null,
-  cardName: null,
-  expiryDate: null,
-  cvc: null,
+  cardNumber: card?.cardNumber || null,
+  cardName: card?.cardName || null,
+  expiryDate: card?.expiryDate || null,
+  cvc: card?.cvc || null,
   error: null,
 };
 

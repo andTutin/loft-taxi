@@ -136,6 +136,15 @@ export const middleware = (store) => (next) => (action) => {
               data.cvc
             )
           );
+          localStorage.setItem(
+            "card",
+            JSON.stringify({
+              cardNumber: data.cardNumber,
+              expiryDate: data.expiryDate,
+              cardName: data.cardName,
+              cvc: data.cvc,
+            })
+          );
         } else {
           store.dispatch(getCardFailure(data.error));
         }
@@ -144,6 +153,7 @@ export const middleware = (store) => (next) => (action) => {
 
   if (action.type === "LOGOUT_BUTTON_PRESSED") {
     localStorage.removeItem("session");
+    localStorage.removeItem("card");
     store.dispatch(logout());
   }
 
