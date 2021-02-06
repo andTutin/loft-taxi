@@ -1,85 +1,107 @@
+import { combineReducers } from "redux";
+import { handleActions } from "redux-actions";
+import {
+  loginRequestSuccessful,
+  loginRequestFailed,
+  registrationRequestSuccessful,
+  registrationRequestFailed,
+  postCardRequestSuccessful,
+  postCardRequestFailed,
+  getCardRequestSuccessful,
+  getCardRequestFailed,
+  logout,
+} from "./actions";
+
 const session = JSON.parse(localStorage.getItem("session"));
-const user = JSON.parse(localStorage.getItem("user"));
 const card = JSON.parse(localStorage.getItem("card"));
 
-let initialState = {
-  loginStatus: session?.loginStatus || false,
-  name: user?.name || null,
-  surname: user?.surname || null,
-  email: session?.email || null,
-  token: session?.token || null,
-  isCardFilled: false,
-  cardNumber: card?.cardNumber || null,
-  cardName: card?.cardName || null,
-  expiryDate: card?.expiryDate || null,
-  cvc: card?.cvc || null,
-  error: null,
-};
+const loginStatus = handleActions(
+  {
+    [loginRequestSuccessful]: () => true,
+    [loginRequestFailed]: () => false,
+    [registrationRequestSuccessful]: () => true,
+    [registrationRequestFailed]: () => false,
+    [logout]: () => false,
+  },
+  session?.loginStatus || false
+);
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case "POST_LOGIN_SUCCESS":
-      return {
-        ...state,
-        loginStatus: true,
-        email: action.payload.email,
-        token: action.payload.token,
-      };
-    case "POST_LOGIN_FAILURE":
-      return {
-        ...state,
-        error: action.payload.error,
-      };
-    case "POST_REGISTRATION_SUCCESS":
-      return {
-        ...state,
-        loginStatus: true,
-        name: action.payload.name,
-        surname: action.payload.name,
-        email: action.payload.email,
-        token: action.payload.token,
-      };
-    case "POST_REGISTRATION_FAILURE":
-      return {
-        ...state,
-        error: action.payload.error,
-      };
-    case "POST_CARD_SUCCESS":
-      return {
-        ...state,
-        isCardFilled: true,
-        cardNumber: action.payload.cardNumber,
-        cardName: action.payload.cardName,
-        expiryDate: action.payload.expiryDate,
-        cvc: action.payload.cvc,
-      };
-    case "POST_CARD_FAILURE":
-      return {
-        ...state,
-        error: action.payload.error,
-      };
-    case "GET_CARD_SUCCESS":
-      return {
-        ...state,
-        isCardFilled: true,
-        cardNumber: action.payload.cardNumber,
-        cardName: action.payload.cardName,
-        expiryDate: action.payload.expiryDate,
-        cvc: action.payload.cvc,
-      };
-    case "LOGOUT":
-      return {
-        ...state,
-        loginStatus: false,
-      };
-    case "EDIT_PROFILE":
-      return {
-        ...state,
-        isCardFilled: false,
-      };
-    default:
-      return state;
-  }
-};
+const token = handleActions(
+  {
+    [loginRequestSuccessful]: (state, action) => action.payload.token,
+    [registrationRequestSuccessful]: (state, action) => action.payload.token,
+  },
+  session?.token || null
+);
 
-export default reducer;
+const email = handleActions(
+  {
+    [loginRequestSuccessful]: (state, action) => action.payload.email,
+    [registrationRequestSuccessful]: (state, action) => action.payload.email,
+  },
+  session?.email || null
+);
+
+const cardNumber = handleActions(
+  {
+    [getCardRequestSuccessful]: (state, action) => action.payload.cardNumber,
+    [postCardRequestSuccessful]: (state, action) => action.payload.cardNumber,
+  },
+  card?.cardNumber || null
+);
+
+const cardName = handleActions(
+  {
+    [getCardRequestSuccessful]: (state, action) => action.payload.cardName,
+    [postCardRequestSuccessful]: (state, action) => action.payload.cardName,
+  },
+  card?.cardName || null
+);
+
+const expiryDate = handleActions(
+  {
+    [getCardRequestSuccessful]: (state, action) => action.payload.expiryDate,
+    [postCardRequestSuccessful]: (state, action) => action.payload.expiryDate,
+  },
+  card?.expiryDate || null
+);
+
+const cvc = handleActions(
+  {
+    [getCardRequestSuccessful]: (state, action) => action.payload.cvc,
+    [postCardRequestSuccessful]: (state, action) => action.payload.cvc,
+  },
+  card?.cvc || null
+);
+
+const error = handleActions(
+  {
+    [loginRequestFailed]: (state, action) => action.payload,
+    [registrationRequestFailed]: (state, action) => action.payload,
+    [getCardRequestFailed]: (state, action) => action.payload,
+    [postCardRequestFailed]: (state, action) => action.payload,
+  },
+  null
+);
+
+const isCardFilled = handleActions(
+  {
+    [getCardRequestSuccessful]: () => true,
+    [getCardRequestFailed]: () => false,
+    [postCardRequestSuccessful]: () => true,
+    [postCardRequestFailed]: () => false,
+  },
+  card ? true : false
+);
+
+export default combineReducers({
+  loginStatus,
+  token,
+  email,
+  cardNumber,
+  cardName,
+  expiryDate,
+  cvc,
+  error,
+  isCardFilled,
+});

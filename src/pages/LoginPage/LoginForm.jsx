@@ -2,14 +2,16 @@ import React from "react";
 import { Grid, Paper, Typography, TextField, Button } from "@material-ui/core/";
 import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { postLoginRequest } from "../../redux/actions";
+import { loginRequest } from "../../redux/actions";
 
 const LoginForm = () => {
   const { loginStatus } = useSelector((state) => state);
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(postLoginRequest("tutin_test@test.com", "123123"));
+    dispatch(
+      loginRequest({ email: "tutin_test@test.com", password: "123123" })
+    );
   };
 
   if (loginStatus) {

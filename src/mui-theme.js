@@ -34,11 +34,6 @@ export const theme = createMuiTheme({
         root: {
           width: "350px"
         },
-        underline: {
-          "&:after": {
-            "border-bottom-color": "#1473e6"
-          }
-        },
       },
       MuiFormHelperText: {
         root: {

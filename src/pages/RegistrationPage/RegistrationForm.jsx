@@ -2,14 +2,21 @@ import React from "react";
 import { Grid, Paper, Typography, TextField, Button } from "@material-ui/core/";
 import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { postRegistrationRequest } from "../../redux/actions";
+import { registrationRequest } from "../../redux/actions";
 
 const RegistrationForm = () => {
-  const { loginStatus } = useSelector(state => state);
+  const { loginStatus } = useSelector((state) => state);
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(postRegistrationRequest("tutin_test@test.com", "123123", 'Andrew', 'Tutin'));
+    dispatch(
+      registrationRequest({
+        email: "tutin_test@test.com",
+        password: "123123",
+        name: "Andrew",
+        surname: "Tutin",
+      })
+    );
   };
 
   if (loginStatus) {

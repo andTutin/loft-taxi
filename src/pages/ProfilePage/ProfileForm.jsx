@@ -15,13 +15,13 @@ const ProfileForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
-      postCardRequest(
-        "4815 1623 4242 1961",
-        "08/15",
-        "JOHN LOCKE",
-        "815",
-        token
-      )
+      postCardRequest({
+        cardNumber: "4815 1623 4242 1961",
+        cardName: "JOHN LOCKE",
+        expiryDate: "08/15",
+        cvc: "815",
+        token,
+      })
     );
   };
 

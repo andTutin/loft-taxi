@@ -1,18 +1,25 @@
 import {
-  postLoginSuccess,
-  postLoginFailure,
-  postRegistrationSuccess,
-  postRegistrationFailure,
-  postCardSuccess,
-  postCardFailure,
+  LOGIN_REQUEST,
+  REGISTRATION_REQUEST,
+  GET_CARD_REQUEST,
+  POST_CARD_REQUEST,
+  LOGOUT_BUTTON_PRESSED,
+} from "./constants";
+import {
+  loginRequestSuccessful,
+  loginRequestFailed,
+  registrationRequestSuccessful,
+  registrationRequestFailed,
   getCardRequest,
-  getCardSuccess,
-  getCardFailure,
+  getCardRequestSuccessful,
+  getCardRequestFailed,
+  postCardRequestSuccessful,
+  postCardRequestFailed,
   logout,
 } from "./actions";
 
 export const middleware = (store) => (next) => (action) => {
-  if (action.type === "POST_LOGIN_REQUEST") {
+  if (action.type === LOGIN_REQUEST) {
     const { email, password } = action.payload;
 
     fetch("https://loft-taxi.glitch.me/auth", {
@@ -36,17 +43,18 @@ export const middleware = (store) => (next) => (action) => {
               token: data.token,
             })
           );
-          store.dispatch(postLoginSuccess(email, data.token));
-
-          store.dispatch(getCardRequest(data.token));
+          store.dispatch(loginRequestSuccessful({ email, token: data.token }));
+          store.dispatch(getCardRequest({ token: data.token }));
         } else {
-          store.dispatch(postLoginFailure(data.error));
+          store.dispatch(loginRequestFailed({ error: data.error }));
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        store.dispatch(loginRequestFailed(err));
+      });
   }
 
-  if (action.type === "POST_REGISTRATION_REQUEST") {
+  if (action.type === REGISTRATION_REQUEST) {
     const { email, password, name, surname } = action.payload;
 
     fetch("https://loft-taxi.glitch.me/register", {
@@ -72,23 +80,24 @@ export const middleware = (store) => (next) => (action) => {
               token: data.token,
             })
           );
-          localStorage.setItem(
-            "user",
-            JSON.stringify({
+          store.dispatch(
+            registrationRequestSuccessful({
               name,
               surname,
+              email,
+              token: data.token,
             })
           );
-          store.dispatch(
-            postRegistrationSuccess(name, surname, email, data.token)
-          );
         } else {
-          store.dispatch(postRegistrationFailure(data.error));
+          store.dispatch(registrationRequestFailed(data.error));
         }
+      })
+      .catch((err) => {
+        store.dispatch(registrationRequestFailed(err));
       });
   }
 
-  if (action.type === "POST_CARD_REQUEST") {
+  if (action.type === POST_CARD_REQUEST) {
     const { cardNumber, expiryDate, cardName, cvc, token } = action.payload;
 
     fetch("https://loft-taxi.glitch.me/card", {
@@ -108,15 +117,18 @@ export const middleware = (store) => (next) => (action) => {
       .then((data) => {
         if (data.success === true) {
           store.dispatch(
-            postCardSuccess(cardNumber, expiryDate, cardName, cvc)
+            postCardRequestSuccessful({ cardNumber, expiryDate, cardName, cvc })
           );
         } else {
-          store.dispatch(postCardFailure(data.error));
+          store.dispatch(postCardRequestFailed(data.error));
         }
+      })
+      .catch((err) => {
+        store.dispatch(postCardRequestFailed(err));
       });
   }
 
-  if (action.type === "GET_CARD_REQUEST") {
+  if (action.type === GET_CARD_REQUEST) {
     const { token } = action.payload;
 
     fetch(`https://loft-taxi.glitch.me/card?token=${token}`, {
@@ -129,12 +141,12 @@ export const middleware = (store) => (next) => (action) => {
       .then((data) => {
         if (data) {
           store.dispatch(
-            getCardSuccess(
-              data.cardNumber,
-              data.expiryDate,
-              data.cardName,
-              data.cvc
-            )
+            getCardRequestSuccessful({
+              cardNumber: data.cardNumber,
+              expiryDate: data.expiryDate,
+              cardName: data.cardName,
+              cvc: data.cvc,
+            })
           );
           localStorage.setItem(
             "card",
@@ -146,12 +158,15 @@ export const middleware = (store) => (next) => (action) => {
             })
           );
         } else {
-          store.dispatch(getCardFailure(data.error));
+          store.dispatch(getCardRequestFailed(data.error));
         }
+      })
+      .catch((err) => {
+        store.dispatch(getCardRequestFailed(err));
       });
   }
 
-  if (action.type === "LOGOUT_BUTTON_PRESSED") {
+  if (action.type === LOGOUT_BUTTON_PRESSED) {
     localStorage.removeItem("session");
     localStorage.removeItem("card");
     store.dispatch(logout());
