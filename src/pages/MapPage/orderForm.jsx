@@ -51,6 +51,19 @@ const OrderForm = () => {
     value: "",
   });
 
+  const [order, setOrder] = useState({
+    from: "",
+    where: "",
+    status: "Стандарт",
+  });
+
+  const setStatus = (status) => {
+    setOrder({
+      ...order,
+      status: status,
+    });
+  };
+
   const handleFromChange = (event) => {
     setFilter({
       type: "from",
@@ -129,9 +142,10 @@ const OrderForm = () => {
               })}
         </Select>
       </FormControl>
-      <CardsBlock />
-      {console.log("render ended")}
-      <Button variant="contained">Заказать</Button>
+      <CardsBlock status={order.status} setStatus={setStatus} />
+      <Button variant="contained" disabled>
+        Заказать
+      </Button>
     </Grid>
   );
 };
