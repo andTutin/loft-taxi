@@ -12,10 +12,12 @@ import {
   logout,
   setIsLoading,
   setIsProfileOpened,
+  addressesListRequestSuccessful,
 } from "./actions";
 
 const session = JSON.parse(localStorage.getItem("session"));
 const card = JSON.parse(localStorage.getItem("card"));
+const addresses = JSON.parse(localStorage.getItem("addresses"));
 
 const loginStatus = handleActions(
   {
@@ -111,6 +113,13 @@ const isProfileOpened = handleActions(
   true
 );
 
+const addressesList = handleActions(
+  {
+    [addressesListRequestSuccessful]: (state, action) => action.payload,
+  },
+  addresses || []
+);
+
 export default combineReducers({
   loginStatus,
   token,
@@ -123,4 +132,5 @@ export default combineReducers({
   isCanOrder,
   isLoading,
   isProfileOpened,
+  addressesList,
 });

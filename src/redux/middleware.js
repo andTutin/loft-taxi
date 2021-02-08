@@ -4,6 +4,7 @@ import {
   GET_CARD_REQUEST,
   POST_CARD_REQUEST,
   LOGOUT_BUTTON_PRESSED,
+  ADDRESSES_LIST_REQUEST,
 } from "./constants";
 import {
   loginRequestSuccessful,
@@ -18,6 +19,9 @@ import {
   logout,
   setIsLoading,
   setIsProfileOpened,
+  addressesListRequestSuccessful,
+  addressesListRequestFailed,
+  addressesListRequest,
 } from "./actions";
 
 export const middleware = (store) => (next) => (action) => {
@@ -47,6 +51,9 @@ export const middleware = (store) => (next) => (action) => {
           );
           store.dispatch(loginRequestSuccessful({ email, token: data.token }));
           store.dispatch(getCardRequest({ token: data.token }));
+          if (!localStorage.getItem("addresses")) {
+            store.dispatch(addressesListRequest());
+          }
         } else {
           store.dispatch(loginRequestFailed({ error: data.error }));
         }
@@ -90,6 +97,7 @@ export const middleware = (store) => (next) => (action) => {
               token: data.token,
             })
           );
+          store.dispatch(addressesListRequest());
         } else {
           store.dispatch(registrationRequestFailed(data.error));
         }
@@ -118,12 +126,6 @@ export const middleware = (store) => (next) => (action) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success === true) {
-          store.dispatch(
-            postCardRequestSuccessful({ cardNumber, expiryDate, cardName, cvc })
-          );
-          store.dispatch(
-            setIsProfileOpened(false)
-          )
           localStorage.setItem(
             "card",
             JSON.stringify({
@@ -133,6 +135,10 @@ export const middleware = (store) => (next) => (action) => {
               cvc,
             })
           );
+          store.dispatch(
+            postCardRequestSuccessful({ cardNumber, expiryDate, cardName, cvc })
+          );
+          store.dispatch(setIsProfileOpened(false));
         } else {
           store.dispatch(postCardRequestFailed(data.error));
         }
@@ -162,17 +168,17 @@ export const middleware = (store) => (next) => (action) => {
       })
       .then((data) => {
         if (data) {
-          store.dispatch(
-            getCardRequestSuccessful({
+          localStorage.setItem(
+            "card",
+            JSON.stringify({
               cardNumber: data.cardNumber,
               expiryDate: data.expiryDate,
               cardName: data.cardName,
               cvc: data.cvc,
             })
           );
-          localStorage.setItem(
-            "card",
-            JSON.stringify({
+          store.dispatch(
+            getCardRequestSuccessful({
               cardNumber: data.cardNumber,
               expiryDate: data.expiryDate,
               cardName: data.cardName,
@@ -185,7 +191,45 @@ export const middleware = (store) => (next) => (action) => {
       })
       .catch((err) => {
         store.dispatch(getCardRequestFailed(err));
+      })
+      .finally(() => {
+        store.dispatch(setIsLoading(false));
       });
+  }
+
+  if (action.type === ADDRESSES_LIST_REQUEST) {
+    store.dispatch(setIsLoading(true));
+
+    fetch("https://loft-taxi.glitch.me/addressList", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data) {
+          localStorage.setItem("addresses", JSON.stringify(data.addresses));
+          store.dispatch(
+            addressesListRequestSuccessful(
+              data.addresses.map((addr) => {
+                return {
+                  id: Math.trunc(Math.random() * 1e3),
+                  address: addr,
+                };
+              })
+            )
+          );
+        } else {
+          store.dispatch(addressesListRequestFailed(data.err));
+        }
+      })
+      .catch((err) => {
+        store.dispatch(addressesListRequestFailed(err));
+      });
+    //.finally(() => {
+    //  store.dispatch(setIsLoading(false));
+    //});
   }
 
   if (action.type === LOGOUT_BUTTON_PRESSED) {

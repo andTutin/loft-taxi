@@ -21,7 +21,6 @@ const CardsBlock = ({ status, setStatus }) => {
     setStatus(card);
   };
 
-  console.log(status)
   return (
     <Grid
       container

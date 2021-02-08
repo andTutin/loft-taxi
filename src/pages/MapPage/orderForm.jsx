@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Grid, FormControl, Select, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import CardsBlock from "./CardsBlock";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -31,50 +32,28 @@ const useStyles = makeStyles((theme) => ({
 
 const OrderForm = () => {
   const classes = useStyles();
-  const addresses = [
-    {
-      id: "1",
-      value: "невский",
-    },
-    {
-      id: "2",
-      value: "пулково",
-    },
-    {
-      id: "3",
-      value: "гатчина",
-    },
-  ];
-
-  const [filter, setFilter] = useState({
-    type: "all",
-    value: "",
-  });
-
+  const { addressesList: addresses } = useSelector((state) => state);
   const [order, setOrder] = useState({
     from: "",
     where: "",
     status: "Стандарт",
   });
-
   const setStatus = (status) => {
     setOrder({
       ...order,
       status: status,
     });
   };
-
   const handleFromChange = (event) => {
-    setFilter({
-      type: "from",
-      value: event.target.value,
+    setOrder({
+      ...order,
+      from: event.target.value,
     });
   };
-
   const handleWhereChange = (event) => {
-    setFilter({
-      type: "where",
-      value: event.target.value,
+    setOrder({
+      ...order,
+      where: event.target.value,
     });
   };
 
@@ -85,30 +64,22 @@ const OrderForm = () => {
           native
           labelId="from"
           id="from"
-          defaultValue={""}
+          defaultValue={order.from}
           onChange={handleFromChange}
           label="from"
         >
           <option value="" disabled>
             Откуда
           </option>
-          {filter.type === "where"
-            ? addresses
-                .filter((a) => a.value !== filter.value)
-                .map((address, i) => {
-                  return (
-                    <option key={address.id} value={address.value}>
-                      {address.value}
-                    </option>
-                  );
-                })
-            : addresses.map((address, i) => {
-                return (
-                  <option key={address.id} value={address.value}>
-                    {address.value}
-                  </option>
-                );
-              })}
+          {addresses
+            .filter((item) => item.address !== order.where)
+            .map((item) => {
+              return (
+                <option key={item.id} value={item.address}>
+                  {item.address}
+                </option>
+              );
+            })}
         </Select>
       </FormControl>
       <FormControl className={classes.formControl}>
@@ -116,30 +87,22 @@ const OrderForm = () => {
           native
           labelId="where"
           id="where"
-          defaultValue={""}
+          defaultValue={order.where}
           onChange={handleWhereChange}
           label="where"
         >
           <option value="" disabled>
             Куда
           </option>
-          {filter.type === "from"
-            ? addresses
-                .filter((a) => a.value !== filter.value)
-                .map((address, i) => {
-                  return (
-                    <option key={address.id} value={address.value}>
-                      {address.value}
-                    </option>
-                  );
-                })
-            : addresses.map((address, i) => {
-                return (
-                  <option key={address.id} value={address.value}>
-                    {address.value}
-                  </option>
-                );
-              })}
+          {addresses
+            .filter((item) => item.address !== order.from)
+            .map((item) => {
+              return (
+                <option key={item.id} value={item.address}>
+                  {item.address}
+                </option>
+              );
+            })}
         </Select>
       </FormControl>
       <CardsBlock status={order.status} setStatus={setStatus} />

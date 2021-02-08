@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
-import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
+import { Grid } from "@material-ui/core";
 var mapboxgl = require("mapbox-gl/dist/mapbox-gl.js");
 
 mapboxgl.accessToken =

@@ -16,6 +16,9 @@ import {
   LOGOUT,
   SET_IS_LOADING,
   SET_IS_PROFILE_OPENED,
+  ADDRESSES_LIST_REQUEST,
+  ADDRESSES_LIST_REQUEST_SUCCESSFUL,
+  ADDRESSES_LIST_REQUEST_FAILED,
 } from "./constants";
 
 export const loginRequest = createAction(LOGIN_REQUEST);
@@ -47,4 +50,12 @@ export const logout = createAction(LOGOUT);
 
 export const setIsLoading = createAction(SET_IS_LOADING);
 
-export const setIsProfileOpened = createAction(SET_IS_PROFILE_OPENED)
+export const setIsProfileOpened = createAction(SET_IS_PROFILE_OPENED);
+
+export const addressesListRequest = createAction(ADDRESSES_LIST_REQUEST);
+export const addressesListRequestSuccessful = createAction(
+  ADDRESSES_LIST_REQUEST_SUCCESSFUL
+);
+export const addressesListRequestFailed = createAction(
+  ADDRESSES_LIST_REQUEST_FAILED
+);

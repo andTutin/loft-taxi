@@ -4,7 +4,7 @@ import OrderForm from "./orderForm";
 import FillProfileRequired from "./fillProfileRequered";
 import Map from "./Map";
 import { useSelector } from "react-redux";
-import { CircularProgress, Paper, Grid } from "@material-ui/core";
+import { Paper, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -24,20 +24,23 @@ const MapPage = () => {
 
   if (isLoading) {
     return (
-      <Grid container component="main" direction="column" justify="flex-start">
-        <Header />
-        <Paper className={classes.blockWrapper}>
-          <CircularProgress color="secondary" />
-        </Paper>
-        <Map className={classes.mapZindex} />
-      </Grid>
+      <>
+        <Grid
+          container
+          component="main"
+          direction="column"
+          justify="flex-start"
+        >
+          <Header />
+          <Map className={classes.mapZindex} isLoading={isLoading} />
+        </Grid>
+      </>
     );
   }
 
   return (
     <Grid container component="main" direction="column" justify="flex-start">
       <Header />
-
       <Paper className={classes.blockWrapper}>
         {isCanOrder ? <OrderForm /> : <FillProfileRequired />}
       </Paper>
