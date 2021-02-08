@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../../components/Header";
 import OrderForm from "./orderForm";
 import FillProfileRequired from "./fillProfileRequered";
+import OrderConfirmed from "./orderConfirmed";
 import Map from "./Map";
 import { useSelector } from "react-redux";
 import { Paper, Grid } from "@material-ui/core";
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MapPage = () => {
   const classes = useStyles();
-  const { isCanOrder, isLoading } = useSelector((state) => state);
+  const { isCanOrder, isLoading, isReorder } = useSelector((state) => state);
 
   if (isLoading) {
     return (
@@ -42,7 +43,15 @@ const MapPage = () => {
     <Grid container component="main" direction="column" justify="flex-start">
       <Header />
       <Paper className={classes.blockWrapper}>
-        {isCanOrder ? <OrderForm /> : <FillProfileRequired />}
+        {isCanOrder ? (
+          isReorder ? (
+            <OrderForm />
+          ) : (
+            <OrderConfirmed />
+          )
+        ) : (
+          <FillProfileRequired />
+        )}
       </Paper>
       <Map />
     </Grid>

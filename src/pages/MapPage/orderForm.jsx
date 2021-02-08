@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Grid, FormControl, Select, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import CardsBlock from "./CardsBlock";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { routeRequest } from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 const OrderForm = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { addressesList: addresses } = useSelector((state) => state);
   const [order, setOrder] = useState({
     from: "",
@@ -56,6 +58,10 @@ const OrderForm = () => {
       ...order,
       where: event.target.value,
     });
+  };
+
+  const clickHandler = () => {
+    dispatch(routeRequest({ address1: order.from, address2: order.where }));
   };
 
   return (
@@ -110,6 +116,7 @@ const OrderForm = () => {
       <Button
         variant="contained"
         disabled={order.from && order.where ? false : true}
+        onClick={clickHandler}
       >
         Заказать
       </Button>

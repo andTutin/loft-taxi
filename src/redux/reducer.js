@@ -13,13 +13,13 @@ import {
   setIsLoading,
   setIsProfileOpened,
   addressesListRequestSuccessful,
+  routeRequestSuccessful,
+  routeRequestFailed,
 } from "./actions";
 
 const session = JSON.parse(localStorage.getItem("session"));
 const card = JSON.parse(localStorage.getItem("card"));
 const addresses = JSON.parse(localStorage.getItem("addresses"));
-
-console.log(addresses)
 
 const loginStatus = handleActions(
   {
@@ -123,6 +123,21 @@ const addressesList = handleActions(
   addresses || []
 );
 
+const isReorder = handleActions(
+  {
+    [routeRequestSuccessful]: () => false,
+    [routeRequestFailed]: () => true,
+  },
+  true
+);
+
+const coords = handleActions(
+  {
+    [routeRequestSuccessful]: (state, action) => action.payload,
+  },
+  []
+);
+
 export default combineReducers({
   loginStatus,
   token,
@@ -136,4 +151,6 @@ export default combineReducers({
   isLoading,
   isProfileOpened,
   addressesList,
+  isReorder,
+  coords,
 });

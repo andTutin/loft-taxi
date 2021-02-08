@@ -19,6 +19,9 @@ import {
   ADDRESSES_LIST_REQUEST,
   ADDRESSES_LIST_REQUEST_SUCCESSFUL,
   ADDRESSES_LIST_REQUEST_FAILED,
+  ROUTE_REQUEST,
+  ROUTE_REQUEST_SUCCESSFUL,
+  ROUTE_REQUEST_FAILED,
 } from "./constants";
 
 export const loginRequest = createAction(LOGIN_REQUEST);
@@ -59,3 +62,7 @@ export const addressesListRequestSuccessful = createAction(
 export const addressesListRequestFailed = createAction(
   ADDRESSES_LIST_REQUEST_FAILED
 );
+
+export const routeRequest = createAction(ROUTE_REQUEST);
+export const routeRequestSuccessful = createAction(ROUTE_REQUEST_SUCCESSFUL);
+export const routeRequestFailed = createAction(ROUTE_REQUEST_FAILED);

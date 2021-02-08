@@ -5,6 +5,7 @@ import {
   POST_CARD_REQUEST,
   LOGOUT_BUTTON_PRESSED,
   ADDRESSES_LIST_REQUEST,
+  ROUTE_REQUEST,
 } from "./constants";
 import {
   loginRequestSuccessful,
@@ -22,6 +23,8 @@ import {
   addressesListRequestSuccessful,
   addressesListRequestFailed,
   addressesListRequest,
+  routeRequestSuccessful,
+  routeRequestFailed,
 } from "./actions";
 
 export const middleware = (store) => (next) => (action) => {
@@ -223,6 +226,35 @@ export const middleware = (store) => (next) => (action) => {
       })
       .catch((err) => {
         store.dispatch(addressesListRequestFailed(err));
+      });
+    //.finally(() => {
+    //  store.dispatch(setIsLoading(false));
+    //});
+  }
+
+  if (action.type === ROUTE_REQUEST) {
+    const { address1, address2 } = action.payload;
+
+    fetch(
+      `https://loft-taxi.glitch.me/route?address1=${address1}&address2=${address2}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        if (data) {
+          console.log(data);
+          store.dispatch(routeRequestSuccessful(data));
+        } else {
+          store.dispatch(routeRequestFailed(data));
+        }
+      })
+      .catch((err) => {
+        store.dispatch(routeRequestFailed(err));
       });
     //.finally(() => {
     //  store.dispatch(setIsLoading(false));
