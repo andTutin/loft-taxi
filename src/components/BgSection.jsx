@@ -4,8 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import bg from "../bg-auth.jpg";
 
 const useStyles = makeStyles((theme) => ({
-  bgSection: {
-    height: "100%",
+  root: {
     background: `url(${bg}) top left / cover`,
   },
 }));
@@ -21,7 +20,7 @@ const BgSection = ({ children }) => {
       direction="row"
       justify="center"
       alignItems="center"
-      className={classes.bgSection}
+      className={classes.root}
     >
       {children}
     </Grid>

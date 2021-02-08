@@ -10,6 +10,8 @@ import {
   getCardRequestSuccessful,
   getCardRequestFailed,
   logout,
+  setIsLoading,
+  setIsProfileOpened,
 } from "./actions";
 
 const session = JSON.parse(localStorage.getItem("session"));
@@ -84,7 +86,7 @@ const error = handleActions(
   null
 );
 
-const isCardFilled = handleActions(
+const isCanOrder = handleActions(
   {
     [getCardRequestSuccessful]: () => true,
     [getCardRequestFailed]: () => false,
@@ -92,6 +94,21 @@ const isCardFilled = handleActions(
     [postCardRequestFailed]: () => false,
   },
   card ? true : false
+);
+
+const isLoading = handleActions(
+  {
+    [setIsLoading]: (state, action) => action.payload,
+    //
+  },
+  false
+);
+
+const isProfileOpened = handleActions(
+  {
+    [setIsProfileOpened]: (state, action) => action.payload,
+  },
+  true
 );
 
 export default combineReducers({
@@ -103,5 +120,7 @@ export default combineReducers({
   expiryDate,
   cvc,
   error,
-  isCardFilled,
+  isCanOrder,
+  isLoading,
+  isProfileOpened,
 });

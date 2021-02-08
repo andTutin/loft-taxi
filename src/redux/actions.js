@@ -14,6 +14,8 @@ import {
   GET_CARD_REQUEST_FAILED,
   LOGOUT_BUTTON_PRESSED,
   LOGOUT,
+  SET_IS_LOADING,
+  SET_IS_PROFILE_OPENED,
 } from "./constants";
 
 export const loginRequest = createAction(LOGIN_REQUEST);
@@ -42,3 +44,7 @@ export const getCardRequestFailed = createAction(GET_CARD_REQUEST_FAILED);
 
 export const logoutButtonPressed = createAction(LOGOUT_BUTTON_PRESSED);
 export const logout = createAction(LOGOUT);
+
+export const setIsLoading = createAction(SET_IS_LOADING);
+
+export const setIsProfileOpened = createAction(SET_IS_PROFILE_OPENED)

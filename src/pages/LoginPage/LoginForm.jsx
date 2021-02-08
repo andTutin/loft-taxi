@@ -3,10 +3,26 @@ import { Grid, Paper, Typography, TextField, Button } from "@material-ui/core/";
 import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginRequest } from "../../redux/actions";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  formWrapper: {
+    padding: "55px 112px",
+  },
+  formText: {
+    marginTop: "20px",
+  },
+  link: {
+    color: theme.palette.secondary.main,
+    textDecoration: "none",
+  },
+}));
 
 const LoginForm = () => {
-  const { loginStatus } = useSelector((state) => state);
+  const classes = useStyles();
   const dispatch = useDispatch();
+  const { loginStatus } = useSelector((state) => state);
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
@@ -19,7 +35,7 @@ const LoginForm = () => {
   }
 
   return (
-    <Paper>
+    <Paper className={classes.formWrapper}>
       <Typography component="h2" variant="h3" align="center">
         Войти
       </Typography>
@@ -53,10 +69,17 @@ const LoginForm = () => {
         <Button type="submit" fullWidth variant="contained">
           Войти
         </Button>
-        <Grid component="div" container justify="flex-end" alignItems="center">
+        <Grid
+          container
+          justify="flex-end"
+          alignItems="center"
+          className={classes.formText}
+        >
           <Typography component="p" variant="body1">
             Новый пользователь?&nbsp;
-            <Link to="/registration">Зарегистрируйтесь</Link>
+            <Link to="/registration" className={classes.link}>
+              Зарегистрируйтесь
+            </Link>
           </Typography>
         </Grid>
       </Grid>

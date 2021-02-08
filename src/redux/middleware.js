@@ -16,6 +16,8 @@ import {
   postCardRequestSuccessful,
   postCardRequestFailed,
   logout,
+  setIsLoading,
+  setIsProfileOpened,
 } from "./actions";
 
 export const middleware = (store) => (next) => (action) => {
@@ -119,6 +121,18 @@ export const middleware = (store) => (next) => (action) => {
           store.dispatch(
             postCardRequestSuccessful({ cardNumber, expiryDate, cardName, cvc })
           );
+          store.dispatch(
+            setIsProfileOpened(false)
+          )
+          localStorage.setItem(
+            "card",
+            JSON.stringify({
+              cardNumber,
+              expiryDate,
+              cardName,
+              cvc,
+            })
+          );
         } else {
           store.dispatch(postCardRequestFailed(data.error));
         }
@@ -130,6 +144,7 @@ export const middleware = (store) => (next) => (action) => {
 
   if (action.type === GET_CARD_REQUEST) {
     const { token } = action.payload;
+    store.dispatch(setIsLoading(true));
 
     fetch(`https://loft-taxi.glitch.me/card?token=${token}`, {
       method: "GET",
@@ -138,6 +153,13 @@ export const middleware = (store) => (next) => (action) => {
       },
     })
       .then((response) => response.json())
+
+      .then((data) => {
+        if (data) {
+          store.dispatch(setIsLoading(false));
+          return data;
+        }
+      })
       .then((data) => {
         if (data) {
           store.dispatch(

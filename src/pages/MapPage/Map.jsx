@@ -1,11 +1,19 @@
 import React, { useRef, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
 var mapboxgl = require("mapbox-gl/dist/mapbox-gl.js");
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYW5kdHV0aW4iLCJhIjoiY2s4dzRlOXNxMDJnaDNscG13YWpwMHNpMiJ9.jcjb43y3S-SsSPURXdYLiA";
 
+const useStyles = makeStyles((theme) => ({
+  mapZindex: {
+    zIndex: "100",
+  },
+}));
+
 const Map = () => {
+  const classes = useStyles();
   let mapContainer = useRef(null);
 
   useEffect(() => {
@@ -22,16 +30,10 @@ const Map = () => {
   }, []);
 
   return (
-    <Grid
-      item
-      xs
-      container
-      direction="column"
-      className="map-wrapper"
-    >
-      <Grid component="div" item xs className="map" ref={mapContainer}></Grid>
+    <Grid item xs container direction="column" className={classes.mapZindex}>
+      <Grid component="div" item xs ref={mapContainer}></Grid>
     </Grid>
   );
 };
 
-export default Map;
+export default React.memo(Map);
