@@ -209,17 +209,14 @@ export const middleware = (store) => (next) => (action) => {
       .then((response) => response.json())
       .then((data) => {
         if (data) {
-          localStorage.setItem("addresses", JSON.stringify(data.addresses));
-          store.dispatch(
-            addressesListRequestSuccessful(
-              data.addresses.map((addr) => {
-                return {
-                  id: Math.trunc(Math.random() * 1e3),
-                  address: addr,
-                };
-              })
-            )
-          );
+          let addressesWithIds = data.addresses.map((addr) => {
+            return {
+              id: Math.trunc(Math.random() * 1e3),
+              address: addr,
+            };
+          });
+          localStorage.setItem("addresses", JSON.stringify(addressesWithIds));
+          store.dispatch(addressesListRequestSuccessful(addressesWithIds));
         } else {
           store.dispatch(addressesListRequestFailed(data.err));
         }

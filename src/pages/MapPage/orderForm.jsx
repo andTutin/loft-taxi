@@ -38,6 +38,7 @@ const OrderForm = () => {
     where: "",
     status: "Стандарт",
   });
+
   const setStatus = (status) => {
     setOrder({
       ...order,
@@ -106,7 +107,10 @@ const OrderForm = () => {
         </Select>
       </FormControl>
       <CardsBlock status={order.status} setStatus={setStatus} />
-      <Button variant="contained" disabled>
+      <Button
+        variant="contained"
+        disabled={order.from && order.where ? false : true}
+      >
         Заказать
       </Button>
     </Grid>

@@ -19,6 +19,8 @@ const session = JSON.parse(localStorage.getItem("session"));
 const card = JSON.parse(localStorage.getItem("card"));
 const addresses = JSON.parse(localStorage.getItem("addresses"));
 
+console.log(addresses)
+
 const loginStatus = handleActions(
   {
     [loginRequestSuccessful]: () => true,
@@ -90,10 +92,11 @@ const error = handleActions(
 
 const isCanOrder = handleActions(
   {
-    [getCardRequestSuccessful]: () => true,
+    //[getCardRequestSuccessful]: () => true,
     [getCardRequestFailed]: () => false,
     [postCardRequestSuccessful]: () => true,
     [postCardRequestFailed]: () => false,
+    [addressesListRequestSuccessful]: () => true,
   },
   card ? true : false
 );
