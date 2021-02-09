@@ -12,10 +12,11 @@ import {
   logout,
   loadingStart,
   loadingDone,
-  setIsProfileOpened,
   addressesListRequestSuccessful,
   routeRequestSuccessful,
   routeRequestFailed,
+  profileOpen,
+  profileClose,
 } from "./actions";
 
 const session = JSON.parse(localStorage.getItem("session"));
@@ -91,17 +92,6 @@ const error = handleActions(
   null
 );
 
-const isCanOrder = handleActions(
-  {
-    [getCardRequestSuccessful]: () => true,
-    [getCardRequestFailed]: () => false,
-    [postCardRequestSuccessful]: () => true,
-    [postCardRequestFailed]: () => false,
-    [addressesListRequestSuccessful]: () => true,
-  },
-  card ? true : false
-);
-
 const isLoading = handleActions(
   {
     [loadingStart]: () => true,
@@ -112,7 +102,8 @@ const isLoading = handleActions(
 
 const isProfileOpened = handleActions(
   {
-    [setIsProfileOpened]: (state, action) => action.payload,
+    [profileOpen]: () => true,
+    [profileClose]: () => false,
   },
   true
 );
@@ -126,10 +117,10 @@ const addressesList = handleActions(
 
 const isReorder = handleActions(
   {
-    [routeRequestSuccessful]: () => false,
-    [routeRequestFailed]: () => true,
+    [routeRequestSuccessful]: () => true,
+    [routeRequestFailed]: () => false,
   },
-  true
+  false
 );
 
 const coords = handleActions(
@@ -149,7 +140,6 @@ export default combineReducers({
   expiryDate,
   cvc,
   error,
-  isCanOrder,
   isLoading,
   isProfileOpened,
   addressesList,

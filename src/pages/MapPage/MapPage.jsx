@@ -5,7 +5,7 @@ import FillProfileRequired from "./fillProfileRequered";
 import OrderConfirmed from "./orderConfirmed";
 import Map from "./Map";
 import { useSelector } from "react-redux";
-import { Paper, Grid } from "@material-ui/core";
+import { Paper, Grid, CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -21,21 +21,40 @@ const useStyles = makeStyles((theme) => ({
 
 const MapPage = () => {
   const classes = useStyles();
-  const { isCanOrder, isLoading, isReorder } = useSelector((state) => state);
+  const { isLoading, addressesList, isReorder } = useSelector((state) => state);
 
   if (isLoading) {
     return (
-      <>
-        <Grid
-          container
-          component="main"
-          direction="column"
-          justify="flex-start"
-        >
-          <Header />
-          <Map className={classes.mapZindex} isLoading={isLoading} />
+      <Grid container component="main" direction="column" justify="flex-start">
+        <Header />
+        <Grid item xs container justify="center" alignItems="center">
+          <CircularProgress color="secondary" />
         </Grid>
-      </>
+      </Grid>
+    );
+  }
+
+  if (isReorder && addressesList.length) {
+    return (
+      <Grid container component="main" direction="column" justify="flex-start">
+        <Header />
+        <Paper className={classes.blockWrapper}>
+          <OrderConfirmed />
+        </Paper>
+        <Map />
+      </Grid>
+    );
+  }
+
+  if (addressesList.length) {
+    return (
+      <Grid container component="main" direction="column" justify="flex-start">
+        <Header />
+        <Paper className={classes.blockWrapper}>
+          <OrderForm />
+        </Paper>
+        <Map className={classes.mapZindex} />
+      </Grid>
     );
   }
 
@@ -43,15 +62,7 @@ const MapPage = () => {
     <Grid container component="main" direction="column" justify="flex-start">
       <Header />
       <Paper className={classes.blockWrapper}>
-        {isCanOrder ? (
-          isReorder ? (
-            <OrderForm />
-          ) : (
-            <OrderConfirmed />
-          )
-        ) : (
-          <FillProfileRequired />
-        )}
+        <FillProfileRequired />
       </Paper>
       <Map />
     </Grid>

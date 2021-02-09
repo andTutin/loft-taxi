@@ -16,7 +16,8 @@ import {
   LOGOUT,
   LOADING_START,
   LOADING_DONE,
-  SET_IS_PROFILE_OPENED,
+  PROFILE_OPEN,
+  PROFILE_CLOSE,
   ADDRESSES_LIST_REQUEST,
   ADDRESSES_LIST_REQUEST_SUCCESSFUL,
   ADDRESSES_LIST_REQUEST_FAILED,
@@ -56,7 +57,8 @@ export const logout = createAction(LOGOUT);
 export const loadingStart = createAction(LOADING_START);
 export const loadingDone = createAction(LOADING_DONE);
 
-export const setIsProfileOpened = createAction(SET_IS_PROFILE_OPENED);
+export const profileOpen = createAction(PROFILE_OPEN);
+export const profileClose = createAction(PROFILE_CLOSE);
 
 export const addressesListRequest = createAction(ADDRESSES_LIST_REQUEST);
 export const addressesListRequestSuccessful = createAction(

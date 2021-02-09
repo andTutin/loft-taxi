@@ -2,7 +2,7 @@ import { Paper, Grid, Typography, Button } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { setIsProfileOpened } from "../../redux/actions";
+import { profileOpen } from "../../redux/actions";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -10,10 +10,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "50px",
     padding: "60px 43px",
   },
-  /*
-  btn: {
-    width: "300px",
-  },*/
 }));
 
 const ProfileFilled = () => {
@@ -27,7 +23,7 @@ const ProfileFilled = () => {
   };
 
   useEffect(() => {
-    return () => dispatch(setIsProfileOpened(true));
+    return () => dispatch(profileOpen());
   });
 
   return (

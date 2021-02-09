@@ -22,6 +22,7 @@ import {
   registrationRequest,
   registrationRequestFailed,
   registrationRequestSuccessful,
+  profileClose,
 } from "./actions";
 
 const fetchLogin = ({ email, password }) => {
@@ -120,9 +121,11 @@ function* authorizationSaga() {
         );
         yield put(getCardRequest({ token: result.token }));
       } else {
+        yield put(loadingDone());
         yield put(loginRequestFailed(result.error));
       }
     } catch (err) {
+      yield put(loadingDone());
       yield put(loginRequestFailed(err));
     }
   });
@@ -136,6 +139,7 @@ function* authorizationSaga() {
 
 function* registrationSaga() {
   yield takeLatest(registrationRequest, function* (action) {
+    yield put(loadingStart());
     try {
       const result = yield call(fetchRegistration, action.payload);
       if (result.success) {
@@ -153,10 +157,13 @@ function* registrationSaga() {
             token: result.token,
           })
         );
+        yield put(getCardRequest({ token: result.token }));
       } else {
+        yield put(loadingDone());
         yield put(registrationRequestFailed(result.error));
       }
     } catch (err) {
+      yield put(loadingDone());
       yield put(registrationRequestFailed(err));
     }
   });
@@ -178,8 +185,12 @@ function* paymentSaga() {
         );
         yield put(getCardRequestSuccessful(result));
         yield put(addressesListRequest());
+      } else {
+        yield put(loadingDone());
+        yield put(getCardRequestFailed(result.error));
       }
     } catch (err) {
+      yield put(loadingDone());
       yield put(getCardRequestFailed(err));
     }
   });
@@ -187,7 +198,6 @@ function* paymentSaga() {
   yield takeLatest(postCardRequest, function* (action) {
     yield put(loadingStart());
     try {
-      console.log(action.payload);
       const result = yield call(fetchCardPost, action.payload);
       if (result.success) {
         localStorage.setItem(
@@ -207,12 +217,15 @@ function* paymentSaga() {
             cvc: result.cvc,
           })
         );
+        yield put(profileClose());
         yield put(addressesListRequest());
       } else {
         yield put(postCardRequestFailed(result.error));
+        yield put(loadingDone());
       }
     } catch (err) {
       yield put(postCardRequestFailed(err));
+      yield put(loadingDone());
     }
   });
 }
@@ -231,6 +244,7 @@ function* addressesListSaga() {
       yield put(addressesListRequestSuccessful(addressesWithIds));
       yield put(loadingDone());
     } catch (err) {
+      yield put(loadingDone());
       yield put(addressesListRequestFailed(err));
     }
   });
@@ -238,14 +252,18 @@ function* addressesListSaga() {
 
 function* routeSaga() {
   yield takeLatest(routeRequest, function* (action) {
+    yield put(loadingStart());
     try {
       const result = yield call(fetchRoute, action.payload);
       if (result) {
         yield put(routeRequestSuccessful(result));
+        yield put(loadingDone());
       } else {
+        yield put(loadingDone());
         yield put(routeRequestFailed(result));
       }
     } catch (err) {
+      yield put(loadingDone());
       yield put(routeRequestFailed(err));
     }
   });
