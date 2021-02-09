@@ -134,6 +134,7 @@ const isReorder = handleActions(
 const coords = handleActions(
   {
     [routeRequestSuccessful]: (state, action) => action.payload,
+    [routeRequestFailed]: () => [],
   },
   []
 );
