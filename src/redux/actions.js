@@ -14,7 +14,8 @@ import {
   GET_CARD_REQUEST_FAILED,
   LOGOUT_BUTTON_PRESSED,
   LOGOUT,
-  SET_IS_LOADING,
+  LOADING_START,
+  LOADING_DONE,
   SET_IS_PROFILE_OPENED,
   ADDRESSES_LIST_REQUEST,
   ADDRESSES_LIST_REQUEST_SUCCESSFUL,
@@ -22,6 +23,7 @@ import {
   ROUTE_REQUEST,
   ROUTE_REQUEST_SUCCESSFUL,
   ROUTE_REQUEST_FAILED,
+  ROUTE_RESET,
 } from "./constants";
 
 export const loginRequest = createAction(LOGIN_REQUEST);
@@ -51,7 +53,8 @@ export const getCardRequestFailed = createAction(GET_CARD_REQUEST_FAILED);
 export const logoutButtonPressed = createAction(LOGOUT_BUTTON_PRESSED);
 export const logout = createAction(LOGOUT);
 
-export const setIsLoading = createAction(SET_IS_LOADING);
+export const loadingStart = createAction(LOADING_START);
+export const loadingDone = createAction(LOADING_DONE);
 
 export const setIsProfileOpened = createAction(SET_IS_PROFILE_OPENED);
 
@@ -66,3 +69,4 @@ export const addressesListRequestFailed = createAction(
 export const routeRequest = createAction(ROUTE_REQUEST);
 export const routeRequestSuccessful = createAction(ROUTE_REQUEST_SUCCESSFUL);
 export const routeRequestFailed = createAction(ROUTE_REQUEST_FAILED);
+export const routeReset = createAction(ROUTE_RESET);

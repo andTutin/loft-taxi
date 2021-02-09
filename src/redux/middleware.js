@@ -1,3 +1,4 @@
+/*
 import {
   LOGIN_REQUEST,
   REGISTRATION_REQUEST,
@@ -139,7 +140,7 @@ export const middleware = (store) => (next) => (action) => {
             })
           );
           store.dispatch(
-            postCardRequestSuccessful({ cardNumber, expiryDate, cardName, cvc })
+            postCardRequestSuccessful(cc)
           );
           store.dispatch(setIsProfileOpened(false));
         } else {
@@ -269,3 +270,4 @@ export const middleware = (store) => (next) => (action) => {
 
   next(action);
 };
+*/

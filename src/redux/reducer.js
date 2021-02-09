@@ -10,7 +10,8 @@ import {
   getCardRequestSuccessful,
   getCardRequestFailed,
   logout,
-  setIsLoading,
+  loadingStart,
+  loadingDone,
   setIsProfileOpened,
   addressesListRequestSuccessful,
   routeRequestSuccessful,
@@ -92,7 +93,7 @@ const error = handleActions(
 
 const isCanOrder = handleActions(
   {
-    //[getCardRequestSuccessful]: () => true,
+    [getCardRequestSuccessful]: () => true,
     [getCardRequestFailed]: () => false,
     [postCardRequestSuccessful]: () => true,
     [postCardRequestFailed]: () => false,
@@ -103,8 +104,8 @@ const isCanOrder = handleActions(
 
 const isLoading = handleActions(
   {
-    [setIsLoading]: (state, action) => action.payload,
-    //
+    [loadingStart]: () => true,
+    [loadingDone]: () => false,
   },
   false
 );
