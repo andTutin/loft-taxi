@@ -252,18 +252,17 @@ function* addressesListSaga() {
 
 function* routeSaga() {
   yield takeLatest(routeRequest, function* (action) {
-    yield put(loadingStart());
     try {
       const result = yield call(fetchRoute, action.payload);
       if (result) {
         yield put(routeRequestSuccessful(result));
-        yield put(loadingDone());
+        //yield put(loadingDone());
       } else {
-        yield put(loadingDone());
+        //yield put(loadingDone());
         yield put(routeRequestFailed(result));
       }
     } catch (err) {
-      yield put(loadingDone());
+      //yield put(loadingDone());
       yield put(routeRequestFailed(err));
     }
   });

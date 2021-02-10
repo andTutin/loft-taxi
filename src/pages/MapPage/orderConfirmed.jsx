@@ -1,14 +1,14 @@
 import React from "react";
 import { Typography, Button, Grid } from "@material-ui/core";
 import { useDispatch } from "react-redux";
-import { routeRequestFailed } from "../../redux/actions";
+import { routeReset } from "../../redux/actions";
 
 const OrderConfirmed = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleClick = (e) => {
     e.preventDefault();
-    dispatch(routeRequestFailed())
+    dispatch(routeReset());
   };
 
   return (

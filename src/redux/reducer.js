@@ -17,6 +17,7 @@ import {
   routeRequestFailed,
   profileOpen,
   profileClose,
+  routeReset,
 } from "./actions";
 
 const session = JSON.parse(localStorage.getItem("session"));
@@ -119,6 +120,8 @@ const isReorder = handleActions(
   {
     [routeRequestSuccessful]: () => true,
     [routeRequestFailed]: () => false,
+    [logout]: () => false,
+    [routeReset]: () => false,
   },
   false
 );
@@ -127,6 +130,8 @@ const coords = handleActions(
   {
     [routeRequestSuccessful]: (state, action) => action.payload,
     [routeRequestFailed]: () => [],
+    [routeReset]: () => [],
+    [logout]: () => [],
   },
   []
 );

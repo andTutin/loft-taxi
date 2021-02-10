@@ -1,11 +1,9 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 import { useSelector } from "react-redux";
+import { clearMap, isMapClear, drawRoute } from "./mapscripts";
 var mapboxgl = require("mapbox-gl/dist/mapbox-gl.js");
-
-mapboxgl.accessToken =
-  "pk.eyJ1IjoiYW5kdHV0aW4iLCJhIjoiY2s4dzRlOXNxMDJnaDNscG13YWpwMHNpMiJ9.jcjb43y3S-SsSPURXdYLiA";
 
 const useStyles = makeStyles((theme) => ({
   mapZindex: {
@@ -13,65 +11,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const drawRoute = (map, coordinates) => {
-  if (coordinates.length) {
-    map.flyTo({
-      center: coordinates[0],
-    });
-
-    map.addLayer({
-      id: "route",
-      type: "line",
-      source: {
-        type: "geojson",
-        data: {
-          type: "Feature",
-          properties: {},
-          geometry: {
-            type: "LineString",
-            coordinates,
-          },
-        },
-      },
-      layout: {
-        "line-join": "round",
-        "line-cap": "round",
-      },
-      paint: {
-        "line-color": "#ffc617",
-        "line-width": 3,
-      },
-    });
-  }
-};
-
 const Map = () => {
   const classes = useStyles();
-  let mapContainer = useRef(null);
-  const { coords } = useSelector((state) => state);
+  const mapContainer = useRef(null);
+  const [map, setMap] = useState(null);
+  const { coords: coordinates } = useSelector((state) => state);
 
   useEffect(() => {
-    const mapgl = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: "mapbox://styles/mapbox/light-v10",
-      zoom: 11,
-      center: [30.30043, 59.919536],
-    });
+    if (map === null) {
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoiYW5kdHV0aW4iLCJhIjoiY2s4dzRlOXNxMDJnaDNscG13YWpwMHNpMiJ9.jcjb43y3S-SsSPURXdYLiA";
+      const mapgl = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: "mapbox://styles/mapbox/light-v10",
+        zoom: 11,
+        center: [30.30043, 59.919536],
+      });
 
-    mapgl.once("data", () => {
-      drawRoute(mapgl, coords);
-    });
-
-    return () => {
-      mapgl.remove();
-    };
-  }, [coords]);
+      mapgl.on("load", () => {
+        setMap(mapgl);
+      });
+    } else {
+      if (isMapClear(map, 'route')) {
+        clearMap(map);
+      }
+      drawRoute(map, coordinates);
+    }
+  }, [coordinates]);
 
   return (
     <Grid item xs container direction="column" className={classes.mapZindex}>
-      <Grid component="div" item xs ref={mapContainer}>
-        {console.log("map render")}
-      </Grid>
+      {console.log('map render')}
+      <Grid component="div" item xs ref={mapContainer}></Grid>
     </Grid>
   );
 };
