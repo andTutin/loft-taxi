@@ -2,14 +2,37 @@ import React from "react";
 import { Grid, Paper, Typography, TextField, Button } from "@material-ui/core/";
 import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { postRegistrationRequest } from "../../redux/actions";
+import { registrationRequest } from "../../redux/actions";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  formWrapper: {
+    padding: "55px 112px",
+  },
+  formText: {
+    marginTop: "20px",
+  },
+  link: {
+    color: theme.palette.secondary.main,
+    textDecoration: "none",
+  },
+}));
 
 const RegistrationForm = () => {
-  const { loginStatus } = useSelector(state => state);
+  const classes = useStyles();
   const dispatch = useDispatch();
+  const { loginStatus } = useSelector((state) => state);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(postRegistrationRequest("tutin_test@test.com", "123123", 'Andrew', 'Tutin'));
+    dispatch(
+      registrationRequest({
+        email: "reg_test@mail.com",
+        password: "123123",
+        name: "foo",
+        surname: "bar",
+      })
+    );
   };
 
   if (loginStatus) {
@@ -17,7 +40,7 @@ const RegistrationForm = () => {
   }
 
   return (
-    <Paper>
+    <Paper className={classes.formWrapper}>
       <Typography component="h2" variant="h3" align="center">
         Регистрация
       </Typography>
@@ -60,10 +83,17 @@ const RegistrationForm = () => {
         <Button type="submit" fullWidth variant="contained">
           Зарегистрироваться
         </Button>
-        <Grid component="div" container justify="flex-end" alignItems="center">
+        <Grid
+          container
+          justify="center"
+          alignItems="center"
+          className={classes.formText}
+        >
           <Typography component="p" variant="body1">
             Уже зарегистрированы?&nbsp;
-            <Link to="/login">Войти</Link>
+            <Link to="/login" className={classes.link}>
+              Войти
+            </Link>
           </Typography>
         </Grid>
       </Grid>

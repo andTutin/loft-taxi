@@ -1,7 +1,7 @@
 import React from "react";
 import Nav from "./Nav";
 import { Grid, AppBar } from "@material-ui/core/";
-import logo from "../svg/logoHeader.svg";
+import logo from "../assets/svg/logoHeader.svg";
 
 const Header = () => {
   return (

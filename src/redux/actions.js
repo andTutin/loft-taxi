@@ -1,143 +1,74 @@
-export function postLoginRequest(email, password) {
-  return {
-    type: "POST_LOGIN_REQUEST",
-    payload: {
-      email,
-      password,
-    },
-  };
-}
+import { createAction } from "redux-actions";
+import {
+  LOGIN_REQUEST,
+  LOGIN_REQUEST_SUCCESSFUL,
+  LOGIN_REQUEST_FAILED,
+  REGISTRATION_REQUEST,
+  REGISTRATION_REQUEST_SUCCESSFUL,
+  REGISTRATION_REQUEST_FAILED,
+  POST_CARD_REQUEST,
+  POST_CARD_REQUEST_SUCCESSFUL,
+  POST_CARD_REQUEST_FAILED,
+  GET_CARD_REQUEST,
+  GET_CARD_REQUEST_SUCCESSFUL,
+  GET_CARD_REQUEST_FAILED,
+  LOGOUT_BUTTON_PRESSED,
+  LOGOUT,
+  LOADING_START,
+  LOADING_DONE,
+  PROFILE_OPEN,
+  PROFILE_CLOSE,
+  ADDRESSES_LIST_REQUEST,
+  ADDRESSES_LIST_REQUEST_SUCCESSFUL,
+  ADDRESSES_LIST_REQUEST_FAILED,
+  ROUTE_REQUEST,
+  ROUTE_REQUEST_SUCCESSFUL,
+  ROUTE_REQUEST_FAILED,
+  ROUTE_RESET,
+} from "./constants";
 
-export function postLoginSuccess(email, token) {
-  return {
-    type: "POST_LOGIN_SUCCESS",
-    payload: {
-      email,
-      token,
-    },
-  };
-}
+export const loginRequest = createAction(LOGIN_REQUEST);
+export const loginRequestSuccessful = createAction(LOGIN_REQUEST_SUCCESSFUL);
+export const loginRequestFailed = createAction(LOGIN_REQUEST_FAILED);
 
-export function postLoginFailure(error) {
-  return {
-    type: "POST_LOGIN_FAILURE",
-    payload: {
-      error,
-    },
-  };
-}
+export const registrationRequest = createAction(REGISTRATION_REQUEST);
+export const registrationRequestSuccessful = createAction(
+  REGISTRATION_REQUEST_SUCCESSFUL
+);
+export const registrationRequestFailed = createAction(
+  REGISTRATION_REQUEST_FAILED
+);
 
-export function postRegistrationRequest(email, password, name, surname) {
-  return {
-    type: "POST_REGISTRATION_REQUEST",
-    payload: {
-      email,
-      password,
-      name,
-      surname,
-    },
-  };
-}
+export const postCardRequest = createAction(POST_CARD_REQUEST);
+export const postCardRequestSuccessful = createAction(
+  POST_CARD_REQUEST_SUCCESSFUL
+);
+export const postCardRequestFailed = createAction(POST_CARD_REQUEST_FAILED);
 
-export function postRegistrationSuccess(name, surname, email, token) {
-  return {
-    type: "POST_REGISTRATION_SUCCESS",
-    payload: {
-      name,
-      surname,
-      email,
-      token,
-    },
-  };
-}
+export const getCardRequest = createAction(GET_CARD_REQUEST);
+export const getCardRequestSuccessful = createAction(
+  GET_CARD_REQUEST_SUCCESSFUL
+);
+export const getCardRequestFailed = createAction(GET_CARD_REQUEST_FAILED);
 
-export function postRegistrationFailure(error) {
-  return {
-    type: "POST_REGISTRATION_FAILURE",
-    payload: {
-      error,
-    },
-  };
-}
+export const logoutButtonPressed = createAction(LOGOUT_BUTTON_PRESSED);
+export const logout = createAction(LOGOUT);
 
-export function postCardRequest(cardNumber, expiryDate, cardName, cvc, token) {
-  return {
-    type: "POST_CARD_REQUEST",
-    payload: {
-      cardNumber,
-      expiryDate,
-      cardName,
-      cvc,
-      token,
-    },
-  };
-}
+export const loadingStart = createAction(LOADING_START);
+export const loadingDone = createAction(LOADING_DONE);
 
-export function postCardSuccess(cardNumber, expiryDate, cardName, cvc) {
-  return {
-    type: "POST_CARD_SUCCESS",
-    payload: {
-      cardNumber,
-      expiryDate,
-      cardName,
-      cvc,
-    },
-  };
-}
+export const profileOpen = createAction(PROFILE_OPEN);
+export const profileClose = createAction(PROFILE_CLOSE);
 
-export function postCardFailure(error) {
-  return {
-    type: "POST_CARD_FAILURE",
-    payload: {
-      error,
-    },
-  };
-}
+export const addressesListRequest = createAction(ADDRESSES_LIST_REQUEST);
+export const addressesListRequestSuccessful = createAction(
+  ADDRESSES_LIST_REQUEST_SUCCESSFUL
+);
+export const addressesListRequestFailed = createAction(
+  ADDRESSES_LIST_REQUEST_FAILED
+);
 
-export function getCardRequest(token) {
-  return {
-    type: "GET_CARD_REQUEST",
-    payload: {
-      token,
-    },
-  };
-}
-
-export function getCardSuccess(cardNumber, expiryDate, cardName, cvc) {
-  return {
-    type: "GET_CARD_SUCCESS",
-    payload: {
-      cardNumber,
-      expiryDate,
-      cardName,
-      cvc,
-    },
-  };
-}
-
-export function getCardFailure(error) {
-  return {
-    type: "GET_CARD_FAILURE",
-    payload: {
-      error,
-    },
-  };
-}
-
-export function editProfile() {
-  return {
-    type: "EDIT_PROFILE",
-  };
-}
-
-export function logoutButtonPressed() {
-  return {
-    type: "LOGOUT_BUTTON_PRESSED",
-  };
-}
-
-export function logout() {
-  return {
-    type: "LOGOUT",
-  };
-}
+export const routeRequest = createAction(ROUTE_REQUEST);
+export const routeRequestSuccessful = createAction(ROUTE_REQUEST_SUCCESSFUL);
+export const routeRequestFailed = createAction(ROUTE_REQUEST_FAILED);
+export const routeReset = createAction(ROUTE_RESET);
