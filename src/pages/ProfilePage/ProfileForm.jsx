@@ -2,9 +2,9 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid, Paper, Typography, TextField, Button } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
-import cardLogo from "../../svg/cardLogo.svg";
-import cardChip from "../../svg/cardChip.svg";
-import cardSystemLogo from "../../svg/cardSystemLogo.svg";
+import cardLogo from "../../assets/svg/cardLogo.svg";
+import cardChip from "../../assets/svg/cardChip.svg";
+import cardSystemLogo from "../../assets/svg/cardSystemLogo.svg";
 import { postCardRequest } from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
@@ -37,10 +37,10 @@ const ProfileForm = () => {
     e.preventDefault();
     dispatch(
       postCardRequest({
-        cardNumber: "4815 1623 4242 1961",
-        cardName: "JOHN LOCKE",
-        expiryDate: "08/15",
-        cvc: "815",
+        cardNumber: "1111 2222 3333 4444",
+        cardName: "CARD HOLDER",
+        expiryDate: "01/23",
+        cvc: "777",
         token,
       })
     );
@@ -140,10 +140,7 @@ const ProfileForm = () => {
             </Grid>
           </Grid>
           <Grid container direction="row" justify="center">
-            <Button
-              type="submit"
-              variant="contained"
-            >
+            <Button type="submit" variant="contained">
               Сохранить
             </Button>
           </Grid>

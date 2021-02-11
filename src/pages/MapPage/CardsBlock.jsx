@@ -1,10 +1,10 @@
-import React /*, { useState }*/ from "react";
+import React from "react";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "./Card";
-import standart from "./standart.png";
-import premium from "./premium.png";
-import business from "./business.png";
+import standart from "../../assets/img/standart.png";
+import premium from "../../assets/img/premium.png";
+import business from "../../assets/img/business.png";
 
 const useStyles = makeStyles((theme) => ({
   cardsBlock: {

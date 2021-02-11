@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../svg/logo.svg";
+import logo from "../assets/svg/logo.svg";
 import { Grid } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
 

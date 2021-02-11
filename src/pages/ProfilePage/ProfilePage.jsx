@@ -3,7 +3,7 @@ import Header from "../../components/Header";
 import ProfileFilled from "./ProfileFilled";
 import ProfileForm from "./ProfileForm";
 import { useSelector } from "react-redux";
-import bg from "./bg_profile.png";
+import bg from "../../assets/img/bg-profile.png";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 

@@ -27,10 +27,10 @@ const RegistrationForm = () => {
     e.preventDefault();
     dispatch(
       registrationRequest({
-        email: "tutin_test@test.com",
+        email: "reg_test@mail.com",
         password: "123123",
-        name: "Andrew",
-        surname: "Tutin",
+        name: "foo",
+        surname: "bar",
       })
     );
   };

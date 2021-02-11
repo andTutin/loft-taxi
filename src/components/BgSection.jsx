@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import bg from "../bg-auth.jpg";
+import bg from "../assets/img/bg-auth.jpg";
 
 const useStyles = makeStyles((theme) => ({
   root: {

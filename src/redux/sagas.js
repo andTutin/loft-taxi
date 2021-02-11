@@ -157,7 +157,7 @@ function* registrationSaga() {
             token: result.token,
           })
         );
-        yield put(getCardRequest({ token: result.token }));
+        yield put(loadingDone());
       } else {
         yield put(loadingDone());
         yield put(registrationRequestFailed(result.error));
@@ -203,18 +203,18 @@ function* paymentSaga() {
         localStorage.setItem(
           "card",
           JSON.stringify({
-            cardNumber: result.cardNumber,
-            expiryDate: result.expiryDate,
-            cardName: result.cardName,
-            cvc: result.cvc,
+            cardNumber: action.payload.cardNumber,
+            expiryDate: action.payload.expiryDate,
+            cardName: action.payload.cardName,
+            cvc: action.payload.cvc,
           })
         );
         yield put(
           postCardRequestSuccessful({
-            cardNumber: result.cardNumber,
-            expiryDate: result.expiryDate,
-            cardName: result.cardName,
-            cvc: result.cvc,
+            cardNumber: action.payload.cardNumber,
+            expiryDate: action.payload.expiryDate,
+            cardName: action.payload.cardName,
+            cvc: action.payload.cvc,
           })
         );
         yield put(profileClose());
@@ -256,13 +256,10 @@ function* routeSaga() {
       const result = yield call(fetchRoute, action.payload);
       if (result) {
         yield put(routeRequestSuccessful(result));
-        //yield put(loadingDone());
       } else {
-        //yield put(loadingDone());
         yield put(routeRequestFailed(result));
       }
     } catch (err) {
-      //yield put(loadingDone());
       yield put(routeRequestFailed(err));
     }
   });

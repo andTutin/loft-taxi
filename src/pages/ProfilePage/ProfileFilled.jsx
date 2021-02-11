@@ -20,11 +20,8 @@ const ProfileFilled = () => {
   const handleClick = (e) => {
     e.preventDefault();
     history.push("/map");
+    dispatch(profileOpen());
   };
-
-  useEffect(() => {
-    return () => dispatch(profileOpen());
-  });
 
   return (
     <Grid container direction="column" alignItems="center">

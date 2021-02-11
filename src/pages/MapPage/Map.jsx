@@ -32,7 +32,7 @@ const Map = () => {
         setMap(mapgl);
       });
     } else {
-      if (isMapClear(map, 'route')) {
+      if (isMapClear(map, "route")) {
         clearMap(map);
       }
       drawRoute(map, coordinates);
@@ -41,7 +41,7 @@ const Map = () => {
 
   return (
     <Grid item xs container direction="column" className={classes.mapZindex}>
-      {console.log('map render')}
+      {console.log("map render")}
       <Grid component="div" item xs ref={mapContainer}></Grid>
     </Grid>
   );
