@@ -218,7 +218,11 @@ function* paymentSaga() {
           })
         );
         yield put(profileClose());
-        yield put(addressesListRequest());
+        if (!localStorage.getItem("addresses")) {
+          yield put(addressesListRequest());
+        } else {
+          yield put(loadingDone());
+        }
       } else {
         yield put(postCardRequestFailed(result.error));
         yield put(loadingDone());
@@ -244,8 +248,8 @@ function* addressesListSaga() {
       yield put(addressesListRequestSuccessful(addressesWithIds));
       yield put(loadingDone());
     } catch (err) {
-      yield put(loadingDone());
       yield put(addressesListRequestFailed(err));
+      yield put(loadingDone());
     }
   });
 }

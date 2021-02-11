@@ -17,24 +17,6 @@ const ProfilePage = () => {
   const classes = useStyles();
   const { isProfileOpened } = useSelector((state) => state);
 
-  if (isProfileOpened) {
-    return (
-      <>
-        <Grid
-          container
-          component="main"
-          direction="column"
-          justify="flex-start"
-          wrap="nowrap"
-          className={classes.profilePageBg}
-        >
-          <Header />
-          <ProfileForm />
-        </Grid>
-      </>
-    );
-  }
-
   return (
     <>
       <Grid
@@ -46,7 +28,7 @@ const ProfilePage = () => {
         className={classes.profilePageBg}
       >
         <Header />
-        <ProfileFilled />
+        {isProfileOpened ? <ProfileForm /> : <ProfileFilled />}
       </Grid>
     </>
   );
