@@ -36,7 +36,7 @@ const ProfileForm = () => {
     cardNumber: cardNumber,
     name: cardName.toUpperCase(),
     cardExpiry: expiryDate,
-    cvc
+    cvc,
   });
 
   const onChange = (e) => {
@@ -49,24 +49,37 @@ const ProfileForm = () => {
         });
         break;
       case "cardNumber":
-        let cardNumber =
-          e.target.value.length >= 19
-            ? e.target.value.slice(0, 19)
-            : [4, 9, 14].includes(e.target.value.length)
-            ? e.target.value + " "
+        let cardNumber;
+        if (e.target.value.length >= card.cardNumber.length) {
+          cardNumber =
+            e.target.value.length >= 19
+              ? e.target.value.slice(0, 19)
+              : [4, 9, 14].includes(e.target.value.length)
+              ? e.target.value + " "
+              : e.target.value;
+        } else {
+          cardNumber = [5, 10, 15].includes(e.target.value.length)
+            ? e.target.value.slice(0, e.target.value.length - 1)
             : e.target.value;
+        }
         setCard({
           ...card,
           cardNumber,
         });
         break;
       case "cardExpiry":
-        let cardExpiry =
-          e.target.value.length >= 5
+        let cardExpiry;
+        if (e.target.value.length >= card.cardExpiry.length) {
+          cardExpiry = e.target.value.length >= 5
             ? e.target.value.slice(0, 5)
             : e.target.value.length === 2
             ? e.target.value + "/"
             : e.target.value;
+        } else {
+          cardExpiry = e.target.value.length === 3
+          ? e.target.value.slice(0, 2)
+          : e.target.value;
+        }
         setCard({
           ...card,
           cardExpiry,
@@ -89,18 +102,15 @@ const ProfileForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //console.log(data);
-    /*
     dispatch(
       postCardRequest({
-        cardNumber: "1111 2222 3333 4444",
-        cardName: "CARD HOLDER",
-        expiryDate: "01/23",
-        cvc: "777",
+        cardNumber: card.cardNumber,
+        cardName: card.name,
+        expiryDate: card.cardExpiry,
+        cvc: card,
         token,
       })
     );
-    */
   };
 
   return (
