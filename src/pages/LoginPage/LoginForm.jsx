@@ -4,6 +4,7 @@ import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginRequest } from "../../redux/actions";
 import { makeStyles } from "@material-ui/core/styles";
+import { useForm, Controller } from "react-hook-form";
 
 const useStyles = makeStyles((theme) => ({
   formWrapper: {
@@ -22,17 +23,31 @@ const LoginForm = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { loginStatus } = useSelector((state) => state);
-  
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(
-      loginRequest({ email: "tutin_test@test.com", password: "123123" })
-    );
+  const methods = useForm();
+  const { handleSubmit, control, register, errors } = methods;
+
+  const onSubmit = ({ email, password }) => {
+    dispatch(loginRequest({ email, password }));
   };
 
   if (loginStatus) {
     return <Redirect to="/map" />;
   }
+
+  const helperEmailText = () => {
+    switch (errors.email?.type) {
+      case "required":
+        return "Email обязателен";
+      case "pattern":
+        return "Невалидный Email";
+      default:
+        return null;
+    }
+  };
+
+  const helperPasswordText = () => {
+    return errors.password?.type === "required" ? "Пароль обязателен" : null;
+  };
 
   return (
     <Paper className={classes.formWrapper}>
@@ -46,25 +61,43 @@ const LoginForm = () => {
         direction="column"
         justify="center"
         alignItems="center"
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
       >
-        <TextField
+        <Controller
+          as={TextField}
+          name="email"
+          control={control}
+          rules={{
+            required: true,
+            pattern: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
+          }}
           variant="standard"
           margin="normal"
           fullWidth
           id="email"
           label="Email"
-          name="email"
           placeholder="mail@mail.ru"
+          defaultValue=""
+          error={!!errors.email}
+          helperText={helperEmailText()}
+          inputRef={register}
         />
-        <TextField
+
+        <Controller
+          as={TextField}
+          type="password"
+          name="password"
+          control={control}
+          rules={{ required: true, minLength: 6 }}
           variant="standard"
           margin="normal"
           fullWidth
           id="password"
           label="Пароль"
-          name="password"
           placeholder="*************"
+          defaultValue=""
+          error={!!errors.password}
+          helperText={helperPasswordText()}
         />
         <Button type="submit" fullWidth variant="contained">
           Войти
