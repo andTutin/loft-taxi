@@ -24,7 +24,7 @@ const RegistrationForm = () => {
   const dispatch = useDispatch();
   const methods = useForm();
   const { handleSubmit, control, register, errors } = methods;
-  const { loginStatus } = useSelector((state) => state);
+  const { loginStatus, error } = useSelector((state) => state);
 
   const onSubmit = ({ email, password, name, surname }) => {
     dispatch(
@@ -159,6 +159,7 @@ const RegistrationForm = () => {
             </Link>
           </Typography>
         </Grid>
+        {error && <p style={{ color: "red" }}>{error}</p>}
       </Grid>
     </Paper>
   );
