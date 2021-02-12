@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid, Paper, Typography, TextField, Button } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
@@ -32,9 +32,65 @@ const ProfileForm = () => {
   const { token, cardNumber, cardName, expiryDate, cvc } = useSelector(
     (state) => state
   );
+  const [card, setCard] = useState({
+    cardNumber: cardNumber,
+    name: cardName.toUpperCase(),
+    cardExpiry: expiryDate,
+    cvc
+  });
+
+  const onChange = (e) => {
+    switch (e.target.id) {
+      case "name":
+        let name = e.target.value.toUpperCase();
+        setCard({
+          ...card,
+          name,
+        });
+        break;
+      case "cardNumber":
+        let cardNumber =
+          e.target.value.length >= 19
+            ? e.target.value.slice(0, 19)
+            : [4, 9, 14].includes(e.target.value.length)
+            ? e.target.value + " "
+            : e.target.value;
+        setCard({
+          ...card,
+          cardNumber,
+        });
+        break;
+      case "cardExpiry":
+        let cardExpiry =
+          e.target.value.length >= 5
+            ? e.target.value.slice(0, 5)
+            : e.target.value.length === 2
+            ? e.target.value + "/"
+            : e.target.value;
+        setCard({
+          ...card,
+          cardExpiry,
+        });
+        break;
+      case "cvc":
+        let cvc =
+          e.target.value.length >= 3
+            ? e.target.value.slice(0, 3)
+            : e.target.value;
+        setCard({
+          ...card,
+          cvc,
+        });
+        break;
+      default:
+        return undefined;
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    //console.log(data);
+    /*
     dispatch(
       postCardRequest({
         cardNumber: "1111 2222 3333 4444",
@@ -44,6 +100,7 @@ const ProfileForm = () => {
         token,
       })
     );
+    */
   };
 
   return (
@@ -73,7 +130,8 @@ const ProfileForm = () => {
                 label="Имя владельца"
                 name="name"
                 placeholder="PIOTR PERVIY"
-                defaultValue={cardName || ""}
+                value={card.name || ""}
+                onChange={onChange}
               />
               <TextField
                 variant="standard"
@@ -83,7 +141,8 @@ const ProfileForm = () => {
                 label="Номер карты"
                 name="cardNumber"
                 placeholder="0000 0000 0000 0000"
-                defaultValue={cardNumber || ""}
+                value={card.cardNumber || ""}
+                onChange={onChange}
               />
               <Grid container direction="row" spacing={5}>
                 <Grid item xs>
@@ -94,7 +153,8 @@ const ProfileForm = () => {
                     label="MM/YY"
                     name="cardExpiry"
                     placeholder="05/23"
-                    defaultValue={expiryDate || ""}
+                    value={card.cardExpiry || ""}
+                    onChange={onChange}
                   />
                 </Grid>
                 <Grid item xs>
@@ -105,7 +165,7 @@ const ProfileForm = () => {
                     label="CVC"
                     name="cardCVC"
                     placeholder="666"
-                    defaultValue={cvc || ""}
+                    value={card.cvc || ""}
                   />
                 </Grid>
               </Grid>
@@ -122,13 +182,13 @@ const ProfileForm = () => {
                   >
                     <Grid container justify="space-between">
                       <img src={cardLogo} alt="Логотип Лофт Такси" />
-                      <Typography>{expiryDate}</Typography>
+                      <Typography>{card.cardExpiry}</Typography>
                     </Grid>
                     <Grid>
-                      <Typography>{cardNumber}</Typography>
+                      <Typography>{card.cardNumber}</Typography>
                     </Grid>
                     <Grid>
-                      <Typography>{cardName}</Typography>
+                      <Typography>{card.name}</Typography>
                     </Grid>
                     <Grid container direction="row" justify="space-between">
                       <img src={cardChip} alt="Логотип Лофт Такси" />
