@@ -82,7 +82,6 @@ const LoginForm = () => {
           helperText={helperEmailText()}
           inputRef={register}
         />
-
         <Controller
           as={TextField}
           type="password"
