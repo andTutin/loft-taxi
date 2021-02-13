@@ -22,17 +22,17 @@ const useStyles = makeStyles((theme) => ({
 const RegistrationForm = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const methods = useForm();
-  const { handleSubmit, control, register, errors } = methods;
   const { loginStatus, error } = useSelector((state) => state);
+  const methods = useForm();
+  const { handleSubmit, control, errors } = methods;
 
   const onSubmit = ({ email, password, name, surname }) => {
     dispatch(
       registrationRequest({
         email,
         password,
-        name: name || "Anonymous",
-        surname: surname || "User",
+        name,
+        surname,
       })
     );
   };
@@ -40,21 +40,6 @@ const RegistrationForm = () => {
   if (loginStatus) {
     return <Redirect to="/map" />;
   }
-
-  const helperEmailText = () => {
-    switch (errors.email?.type) {
-      case "required":
-        return "Email обязателен";
-      case "pattern":
-        return "Невалидный Email";
-      default:
-        return null;
-    }
-  };
-
-  const helperPasswordText = () => {
-    return errors.password?.type === "required" ? "Пароль обязателен" : null;
-  };
 
   return (
     <Paper className={classes.formWrapper}>
@@ -71,77 +56,100 @@ const RegistrationForm = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <Controller
-          as={TextField}
           name="email"
+          as={
+            <TextField
+              type="email"
+              id="email"
+              label="Email"
+              placeholder="mail@mail.ru"
+              margin="normal"
+              fullWidth
+              error={!!errors.email}
+              helperText={errors.email?.message || null}
+            />
+          }
           control={control}
           rules={{
-            required: true,
-            pattern: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
+            required: "Email обязателен",
+            pattern: {
+              value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+              message: "Невалидный Email",
+            },
           }}
-          variant="standard"
-          margin="normal"
-          fullWidth
-          id="email"
-          label="Email"
-          placeholder="mail@mail.ru"
           defaultValue=""
-          error={!!errors.email}
-          helperText={helperEmailText()}
-          inputRef={register}
         />
         <Grid container spacing={2}>
           <Grid item xs>
             <Controller
-              as={TextField}
               name="name"
+              as={
+                <TextField
+                  id="name"
+                  label="Имя"
+                  placeholder="Иван"
+                  margin="normal"
+                  fullWidth
+                  error={!!errors.name}
+                  helperText={errors.name?.message || null}
+                />
+              }
               control={control}
               rules={{
-                required: false,
+                required: "Как вас зовут?",
               }}
-              variant="standard"
-              margin="normal"
-              fullWidth
-              id="name"
-              label="Имя"
-              placeholder="Иван"
               defaultValue=""
-              inputRef={register}
             />
           </Grid>
           <Grid item xs>
             <Controller
-              as={TextField}
               name="surname"
+              as={
+                <TextField
+                  id="surname"
+                  label="Фамилия"
+                  placeholder="Петров"
+                  margin="normal"
+                  fullWidth
+                  error={!!errors.surname}
+                  helperText={errors.surname?.message || null}
+                />
+              }
               control={control}
               rules={{
-                required: false,
+                required: "Как вас зовут?",
               }}
-              variant="standard"
-              margin="normal"
-              fullWidth
-              id="surname"
-              label="Фамилия"
-              placeholder="Иванов"
               defaultValue=""
-              inputRef={register}
             />
           </Grid>
         </Grid>
         <Controller
-          as={TextField}
-          type="password"
           name="password"
+          as={
+            <TextField
+              type="password"
+              id="password"
+              label="Пароль"
+              placeholder="*************"
+              margin="normal"
+              fullWidth
+              error={!!errors.password}
+              helperText={errors.password?.message || null}
+            />
+          }
           control={control}
-          rules={{ required: true, minLength: 6 }}
-          variant="standard"
-          margin="normal"
-          fullWidth
-          id="password"
-          label="Пароль"
-          placeholder="*************"
+          rules={{
+            required: "Пароль обязателен",
+            minLength: {
+              value: 6,
+              message: "Пароль должен быть не менее 6 символов длиной",
+            },
+            pattern: {
+              value: /[a-zA-Z0-9]+/,
+              message: 'Разрёшенные символы a-z, A-Z, 0-9'
+            }
+          }}
           defaultValue=""
-          error={!!errors.password}
-          helperText={helperPasswordText()}
         />
         <Button type="submit" fullWidth variant="contained">
           Зарегистрироваться

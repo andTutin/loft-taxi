@@ -59,7 +59,7 @@ const LoginForm = () => {
               margin="normal"
               fullWidth
               error={!!errors.email}
-              helperText={errors.email ? errors.email.message : null}
+              helperText={errors.email?.message || null}
             />
           }
           control={control}
@@ -83,7 +83,7 @@ const LoginForm = () => {
               margin="normal"
               fullWidth
               error={!!errors.password}
-              helperText={errors.password ? errors.password.message : null}
+              helperText={errors.password?.message || null}
             />
           }
           control={control}
