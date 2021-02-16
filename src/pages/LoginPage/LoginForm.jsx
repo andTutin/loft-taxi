@@ -23,7 +23,7 @@ const LoginForm = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { loginStatus } = useSelector((state) => state.auth);
-  const { error } = useSelector((state) => state.helpers);
+  const { error } = useSelector((state) => state);
   const methods = useForm();
   const { handleSubmit, control, errors } = methods;
 

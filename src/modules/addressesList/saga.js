@@ -4,7 +4,7 @@ import {
   addressesListRequestSuccessful,
   addressesListRequestFailed,
 } from "./actions";
-import { loadingDone } from "../helpers";
+import { loadingDone } from "../flags";
 
 const fetchAddressesList = () => {
   return fetch("https://loft-taxi.glitch.me/addressList", {

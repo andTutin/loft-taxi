@@ -2,7 +2,7 @@ import { Paper, Grid, Typography, Button } from "@material-ui/core";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { profileOpen } from "../../modules/helpers";
+import { profileOpen } from "../../modules/flags";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({

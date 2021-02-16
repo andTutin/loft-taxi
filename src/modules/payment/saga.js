@@ -8,7 +8,7 @@ import {
   postCardRequestFailed,
 } from "./actions";
 import { addressesListRequest } from "../addressesList";
-import { loadingStart, loadingDone, profileClose } from "../helpers";
+import { loadingStart, loadingDone, profileClose } from "../flags";
 
 const fetchCardGet = ({ token }) => {
   return fetch(`https://loft-taxi.glitch.me/card?token=${token}`, {

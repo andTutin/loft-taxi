@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfilePage = () => {
   const classes = useStyles();
-  const { isProfileOpened } = useSelector((state) => state.helpers);
+  const { isProfileOpened } = useSelector((state) => state.flags);
 
   return (
     <>

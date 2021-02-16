@@ -24,9 +24,8 @@ let modalComponent;
 const Modal = () => {
   const classes = useStyles();
   const { loginStatus } = useSelector((state) => state.auth);
-  const { addressesList } = useSelector((state) => state);
-  const { isLoading } = useSelector((state) => state.helpers);
-  const { route } = useSelector((state) => state);
+  const { addressesList, route } = useSelector((state) => state);
+  const { isLoading } = useSelector((state) => state.flags);
 
   if (route.length) {
     modalComponent = (

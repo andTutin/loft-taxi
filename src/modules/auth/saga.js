@@ -9,7 +9,7 @@ import {
   logoutButtonPressed,
   logout,
 } from "./actions";
-import { loadingStart, loadingDone } from "../helpers";
+import { loadingStart, loadingDone } from "../flags";
 import { getCardRequest } from "../payment";
 
 const fetchLogin = ({ email, password }) => {
