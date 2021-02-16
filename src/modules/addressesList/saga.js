@@ -5,15 +5,7 @@ import {
   addressesListRequestFailed,
 } from "./actions";
 import { loadingDone } from "../flags";
-
-const fetchAddressesList = () => {
-  return fetch("https://loft-taxi.glitch.me/addressList", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-    },
-  }).then((response) => response.json());
-};
+import { fetchAddressesList } from "../../API";
 
 export function* addressesListSaga() {
   yield takeLatest(addressesListRequest, function* () {
