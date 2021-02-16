@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Paper, Typography, TextField, Button } from "@material-ui/core/";
 import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { registrationRequest } from "../../redux/actions";
+import { registrationRequest } from "../../modules/auth";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm, Controller } from "react-hook-form";
 
@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
 const RegistrationForm = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { loginStatus, error } = useSelector((state) => state);
+  const { loginStatus } = useSelector((state) => state.auth);
+  const { error } = useSelector((state) => state.helpers);
   const methods = useForm();
   const { handleSubmit, control, errors } = methods;
 
@@ -146,8 +147,8 @@ const RegistrationForm = () => {
             },
             pattern: {
               value: /[a-zA-Z0-9]+/,
-              message: 'Разрёшенные символы a-z, A-Z, 0-9'
-            }
+              message: "Разрёшенные символы a-z, A-Z, 0-9",
+            },
           }}
           defaultValue=""
         />

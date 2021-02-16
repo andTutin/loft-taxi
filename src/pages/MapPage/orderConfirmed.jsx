@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, Button, Grid } from "@material-ui/core";
 import { useDispatch } from "react-redux";
-import { routeReset } from "../../redux/actions";
+import { routeReset } from "../../modules/route";
 
 const OrderConfirmed = () => {
   const dispatch = useDispatch();

@@ -3,7 +3,7 @@ import { Grid, FormControl, Select, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import CardsBlock from "./CardsBlock";
 import { useDispatch, useSelector } from "react-redux";
-import { routeRequest } from "../../redux/actions";
+import { routeRequest } from "../../modules/route";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {

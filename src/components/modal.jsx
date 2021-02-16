@@ -23,14 +23,12 @@ let modalComponent;
 
 const Modal = () => {
   const classes = useStyles();
-  const {
-    addressesList,
-    isReorder,
-    loginStatus,
-    isLoading,
-  } = useSelector((state) => state);
+  const { loginStatus } = useSelector((state) => state.auth);
+  const { addressesList } = useSelector((state) => state);
+  const { isLoading } = useSelector((state) => state.helpers);
+  const { route } = useSelector((state) => state);
 
-  if (isReorder && addressesList.length) {
+  if (route.length) {
     modalComponent = (
       <Paper className={classes.blockWrapper}>
         <OrderConfirmed />

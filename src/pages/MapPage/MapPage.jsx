@@ -6,7 +6,7 @@ import { Grid, CircularProgress } from "@material-ui/core";
 import Modal from "../../components/modal";
 
 const MapPage = () => {
-  const { isLoading } = useSelector((state) => state);
+  const { isLoading } = useSelector((state) => state.helpers);
 
   if (isLoading) {
     return (

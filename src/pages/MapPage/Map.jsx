@@ -15,7 +15,7 @@ const Map = () => {
   const classes = useStyles();
   const mapContainer = useRef(null);
   const [map, setMap] = useState(null);
-  const { coords: coordinates } = useSelector((state) => state);
+  const { route: coordinates } = useSelector((state) => state);
 
   useEffect(() => {
     if (map === null) {
@@ -37,11 +37,10 @@ const Map = () => {
       }
       drawRoute(map, coordinates);
     }
-  }, [coordinates]);
+  }, [map, coordinates]);
 
   return (
     <Grid item xs container direction="column" className={classes.mapZindex}>
-      {console.log("map render")}
       <Grid component="div" item xs ref={mapContainer}></Grid>
     </Grid>
   );

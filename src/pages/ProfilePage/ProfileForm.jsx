@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import cardLogo from "../../assets/svg/cardLogo.svg";
 import cardChip from "../../assets/svg/cardChip.svg";
 import cardSystemLogo from "../../assets/svg/cardSystemLogo.svg";
-import { postCardRequest } from "../../redux/actions";
+import { postCardRequest } from "../../modules/payment";
 import { useForm, Controller } from "react-hook-form";
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +31,7 @@ const ProfileForm = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { token, cardNumber, cardName, expiryDate, cvc } = useSelector(
-    (state) => state
+    (state) => state.payment
   );
   const { handleSubmit, control, errors, watch } = useForm({
     reValidateMode: "onChange",
@@ -114,7 +114,8 @@ const ProfileForm = () => {
                   required: "Поле обязательно для заполнения",
                   pattern: {
                     value: /^\d{4}\s\d{4}\s\d{4}\s\d{4}$/,
-                    message: "Должен состоять из 4 блоков по 4 цифры, разделённых пробелом.",
+                    message:
+                      "Должен состоять из 4 блоков по 4 цифры, разделённых пробелом.",
                   },
                 }}
               />
@@ -138,7 +139,8 @@ const ProfileForm = () => {
                       required: "Поле обязательно для заполнения",
                       pattern: {
                         value: /^\d{2}\/\d{2}$/,
-                        message: "Должен содержать 4 цифры разделённые символом \"/\"",
+                        message:
+                          'Должен содержать 4 цифры разделённые символом "/"',
                       },
                     }}
                   />

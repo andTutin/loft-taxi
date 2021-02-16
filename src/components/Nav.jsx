@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Grid } from "@material-ui/core/";
 import { useDispatch } from "react-redux";
-import { logoutButtonPressed } from "../redux/actions";
+import { logoutButtonPressed } from "../modules/auth";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
