@@ -1,12 +1,11 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Grid, Paper, Typography, TextField, Button } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
 import cardLogo from "../../assets/svg/cardLogo.svg";
 import cardChip from "../../assets/svg/cardChip.svg";
 import cardSystemLogo from "../../assets/svg/cardSystemLogo.svg";
-import { postCardRequest } from "../../modules/payment";
 import { useForm, Controller } from "react-hook-form";
+import { usePayment } from "../../modules/payment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,10 +28,13 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfileForm = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const { token, cardNumber, cardName, expiryDate, cvc } = useSelector(
-    (state) => state.payment
-  );
+  const {
+    cardNumber,
+    cardName,
+    expiryDate,
+    cvc,
+    sendCard,
+  } = usePayment();
   const { handleSubmit, control, errors, watch } = useForm({
     reValidateMode: "onChange",
     defaultValues: {
@@ -42,18 +44,6 @@ const ProfileForm = () => {
       cvc,
     },
   });
-
-  const onSubmit = ({ cardNumber, cardName, expiryDate, cvc }) => {
-    dispatch(
-      postCardRequest({
-        cardNumber,
-        cardName,
-        expiryDate,
-        cvc,
-        token,
-      })
-    );
-  };
 
   return (
     <Grid container direction="column" alignItems="center">
@@ -69,7 +59,7 @@ const ProfileForm = () => {
           component="form"
           data-testid="profile-form"
           direction="column"
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(sendCard)}
           className={classes.form}
         >
           <Grid container direction="row" wrap="nowrap" spacing={5}>
