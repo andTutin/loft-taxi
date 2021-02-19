@@ -1,9 +1,8 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Grid } from "@material-ui/core/";
-import { useDispatch } from "react-redux";
-import { logoutButtonPressed } from "../modules/auth";
 import { makeStyles } from "@material-ui/core/styles";
+import { useAuth } from "../modules/auth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,17 +18,12 @@ const useStyles = makeStyles((theme) => ({
 const Nav = () => {
   const history = useHistory();
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const { logout } = useAuth();
 
   const setClassName = (tab) => {
     return history.location.pathname === `/${tab}`
       ? classes.active
       : classes.root;
-  };
-
-  const handleLogout = (e) => {
-    e.preventDefault();
-    dispatch(logoutButtonPressed());
   };
 
   return (
@@ -40,7 +34,7 @@ const Nav = () => {
       <Link to="/profile" className={setClassName("profile")}>
         Профиль
       </Link>
-      <Link className={classes.root} to="/login" onClick={handleLogout}>
+      <Link className={classes.root} to="/login" onClick={logout}>
         Выйти
       </Link>
     </Grid>

@@ -1,8 +1,8 @@
 import React from "react";
 import { Grid, Paper, Typography, TextField, Button } from "@material-ui/core/";
 import { Link, Redirect } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { registrationRequest } from "../../modules/auth";
+import { useSelector } from "react-redux";
+import { useAuth } from "../../modules/auth";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm, Controller } from "react-hook-form";
 
@@ -21,24 +21,12 @@ const useStyles = makeStyles((theme) => ({
 
 const RegistrationForm = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const { loginStatus } = useSelector((state) => state.auth);
-  const { error } = useSelector((state) => state.helpers);
+  const { token, registration } = useAuth();
+  const { error } = useSelector((state) => state);
   const methods = useForm();
   const { handleSubmit, control, errors } = methods;
 
-  const onSubmit = ({ email, password, name, surname }) => {
-    dispatch(
-      registrationRequest({
-        email,
-        password,
-        name,
-        surname,
-      })
-    );
-  };
-
-  if (loginStatus) {
+  if (token) {
     return <Redirect to="/map" />;
   }
 
@@ -54,7 +42,7 @@ const RegistrationForm = () => {
         direction="column"
         justify="center"
         alignItems="center"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(registration)}
       >
         <Controller
           name="email"

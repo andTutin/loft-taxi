@@ -8,19 +8,11 @@ import {
 
 const session = JSON.parse(localStorage.getItem("session"));
 
-const loginStatus = handleActions(
-  {
-    [loginRequestSuccessful]: () => true,
-    [registrationRequestSuccessful]: () => true,
-    [logout]: () => false,
-  },
-  session?.loginStatus || false
-);
-
 const token = handleActions(
   {
     [loginRequestSuccessful]: (state, action) => action.payload.token,
     [registrationRequestSuccessful]: (state, action) => action.payload.token,
+    [logout]: () => null,
   },
   session?.token || null
 );
@@ -34,7 +26,6 @@ const email = handleActions(
 );
 
 export default combineReducers({
-  loginStatus,
   token,
   email,
 });

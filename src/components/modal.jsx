@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import OrderForm from "../pages/MapPage/orderForm";
 import FillProfileRequired from "../pages/MapPage/fillProfileRequered";
 import OrderConfirmed from "../pages/MapPage/orderConfirmed";
+import { useAuth } from "../modules/auth";
 import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper } from "@material-ui/core";
@@ -23,7 +24,7 @@ let modalComponent;
 
 const Modal = () => {
   const classes = useStyles();
-  const { loginStatus } = useSelector((state) => state.auth);
+  const { token } = useAuth();
   const { addressesList, route } = useSelector((state) => state);
   const { isLoading } = useSelector((state) => state.flags);
 
@@ -47,7 +48,7 @@ const Modal = () => {
     );
   }
 
-  return loginStatus && !isLoading
+  return token && !isLoading
     ? ReactDOM.createPortal(modalComponent, modalRoot)
     : null;
 };
