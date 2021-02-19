@@ -11,7 +11,7 @@ import {
 } from "./actions";
 import { loadingStart, loadingDone } from "../flags";
 import { getCardRequest } from "../payment";
-import { fetchLogin, fetchRegistration } from "../../API";
+import { fetchLogin, fetchRegistration } from "./api";
 
 export function* authSaga() {
   yield takeLatest(loginRequest, function* (action) {

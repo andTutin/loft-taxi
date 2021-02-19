@@ -4,7 +4,7 @@ import {
   routeRequestSuccessful,
   routeRequestFailed,
 } from "./actions";
-import { fetchRoute } from "../../API";
+import { fetchRoute } from "./api";
 
 export function* routeSaga() {
   yield takeLatest(routeRequest, function* (action) {

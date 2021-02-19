@@ -9,7 +9,7 @@ import {
 } from "./actions";
 import { addressesListRequest } from "../addressesList";
 import { loadingStart, loadingDone, profileClose } from "../flags";
-import { fetchCardGet, fetchCardPost } from "../../API";
+import { fetchCardGet, fetchCardPost } from "./api";
 
 export function* paymentSaga() {
   yield takeLatest(getCardRequest, function* (action) {

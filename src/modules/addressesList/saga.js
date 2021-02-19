@@ -5,7 +5,7 @@ import {
   addressesListRequestFailed,
 } from "./actions";
 import { loadingDone } from "../flags";
-import { fetchAddressesList } from "../../API";
+import { fetchAddressesList } from "./api";
 
 export function* addressesListSaga() {
   yield takeLatest(addressesListRequest, function* () {
