@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/loft-taxi/static/css/main.fbf5c7f8.chunk.css",
+    "main.js": "/loft-taxi/static/js/main.046cbc8d.chunk.js",
+    "main.js.map": "/loft-taxi/static/js/main.046cbc8d.chunk.js.map",
+    "runtime-main.js": "/loft-taxi/static/js/runtime-main.48c37db5.js",
+    "runtime-main.js.map": "/loft-taxi/static/js/runtime-main.48c37db5.js.map",
+    "static/js/2.7c85cc85.chunk.js": "/loft-taxi/static/js/2.7c85cc85.chunk.js",
+    "static/js/2.7c85cc85.chunk.js.map": "/loft-taxi/static/js/2.7c85cc85.chunk.js.map",
+    "static/js/3.da4ee97a.chunk.js": "/loft-taxi/static/js/3.da4ee97a.chunk.js",
+    "static/js/3.da4ee97a.chunk.js.map": "/loft-taxi/static/js/3.da4ee97a.chunk.js.map",
+    "index.html": "/loft-taxi/index.html",
+    "static/css/main.fbf5c7f8.chunk.css.map": "/loft-taxi/static/css/main.fbf5c7f8.chunk.css.map",
+    "static/js/2.7c85cc85.chunk.js.LICENSE.txt": "/loft-taxi/static/js/2.7c85cc85.chunk.js.LICENSE.txt",
+    "static/media/auth.ad6fab83.jpg": "/loft-taxi/static/media/auth.ad6fab83.jpg",
+    "static/media/chip.c84e7851.svg": "/loft-taxi/static/media/chip.c84e7851.svg",
+    "static/media/logo.860ed155.svg": "/loft-taxi/static/media/logo.860ed155.svg",
+    "static/media/logoAuth.45316ab2.svg": "/loft-taxi/static/media/logoAuth.45316ab2.svg",
+    "static/media/logoHeader.bfa3e5df.svg": "/loft-taxi/static/media/logoHeader.bfa3e5df.svg",
+    "static/media/profile.0994a527.png": "/loft-taxi/static/media/profile.0994a527.png",
+    "static/media/system.11ada678.svg": "/loft-taxi/static/media/system.11ada678.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.48c37db5.js",
+    "static/js/2.7c85cc85.chunk.js",
+    "static/css/main.fbf5c7f8.chunk.css",
+    "static/js/main.046cbc8d.chunk.js"
+  ]
+}
