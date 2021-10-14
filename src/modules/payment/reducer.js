@@ -1,44 +1,57 @@
-import { combineReducers } from "redux";
-import { handleActions } from "redux-actions";
-import { postCardRequestSuccessful, getCardRequestSuccessful } from "./actions";
+import { POST_CARD_REQUEST_SUCCESSFUL } from ".";
+import {
+  GET_CARD_REQUEST_FAILED,
+  GET_CARD_REQUEST_SUCCESSFUL,
+  POST_CARD_REQUEST_FAILED,
+} from "./actions";
+import { LOGOUT } from "../auth";
+const initialState = {
+  cardNumber: null,
+  cardName: null,
+  cvc: null,
+  expiryDate: null,
+  error: null,
+};
 
-const card = JSON.parse(localStorage.getItem("card"));
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_CARD_REQUEST_SUCCESSFUL:
+      return {
+        ...state,
+        cardNumber: action.payload.cardNumber,
+        cardName: action.payload.cardName,
+        expiryDate: action.payload.expiryDate,
+        cvc: action.payload.cvc,
+      };
 
-const cardNumber = handleActions(
-  {
-    [getCardRequestSuccessful]: (state, action) => action.payload.cardNumber,
-    [postCardRequestSuccessful]: (state, action) => action.payload.cardNumber,
-  },
-  card?.cardNumber || null
-);
+    case GET_CARD_REQUEST_FAILED:
+      return {
+        ...state,
+        error: action.error,
+      };
 
-const cardName = handleActions(
-  {
-    [getCardRequestSuccessful]: (state, action) => action.payload.cardName,
-    [postCardRequestSuccessful]: (state, action) => action.payload.cardName,
-  },
-  card?.cardName || null
-);
+    case POST_CARD_REQUEST_SUCCESSFUL:
+      return {
+        ...state,
+        cardNumber: action.payload.cardNumber,
+        cardName: action.payload.cardName,
+        expiryDate: action.payload.expiryDate,
+        cvc: action.payload.cvc,
+      };
 
-const expiryDate = handleActions(
-  {
-    [getCardRequestSuccessful]: (state, action) => action.payload.expiryDate,
-    [postCardRequestSuccessful]: (state, action) => action.payload.expiryDate,
-  },
-  card?.expiryDate || null
-);
+    case POST_CARD_REQUEST_FAILED:
+      return {
+        ...state,
+        error: action.error,
+      };
 
-const cvc = handleActions(
-  {
-    [getCardRequestSuccessful]: (state, action) => action.payload.cvc,
-    [postCardRequestSuccessful]: (state, action) => action.payload.cvc,
-  },
-  card?.cvc || null
-);
+    case LOGOUT:
+      return {
+        ...initialState,
+      };
+    default:
+      return state;
+  }
+};
 
-export default combineReducers({
-  cardNumber,
-  cardName,
-  expiryDate,
-  cvc,
-});
+export default reducer;

@@ -1,29 +1,48 @@
-import { combineReducers } from "redux";
-import { handleActions } from "redux-actions";
-import {
-  loadingStart,
-  loadingDone,
-  profileOpen,
-  profileClose,
-} from "./actions";
+import { PROFILE_CLOSE, PROFILE_OPEN } from ".";
+import { LOADING_START, LOADING_DONE } from "./actions";
+import { LOGOUT } from "../auth";
 
-const isLoading = handleActions(
-  {
-    [loadingStart]: () => true,
-    [loadingDone]: () => false,
-  },
-  false
-);
+const initialState = {
+  isLoading: false,
+  isProfileOpened: true,
+};
 
-const isProfileOpened = handleActions(
-  {
-    [profileOpen]: () => true,
-    [profileClose]: () => false,
-  },
-  true
-);
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case LOADING_START:
+      return {
+        ...state,
+        isLoading: true,
+      };
 
-export default combineReducers({
-  isLoading,
-  isProfileOpened,
-});
+    case LOADING_DONE:
+      return {
+        ...state,
+        isLoading: false,
+      };
+
+    case PROFILE_OPEN: {
+      return {
+        ...state,
+        isProfileOpened: true,
+      };
+    }
+
+    case PROFILE_CLOSE: {
+      return {
+        ...state,
+        isProfileOpened: false,
+      };
+    }
+
+    case LOGOUT:
+      return {
+        ...initialState,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export default reducer;

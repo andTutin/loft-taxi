@@ -1,21 +1,69 @@
-import { createAction } from "redux-actions";
+export const POST_CARD_REQUEST = "POST_CARD_REQUEST";
+export const POST_CARD_REQUEST_SUCCESSFUL = "POST_CARD_REQUEST_SUCCESSFUL";
+export const POST_CARD_REQUEST_FAILED = "POST_CARD_REQUEST_FAILED";
 
-const POST_CARD_REQUEST = "POST_CARD_REQUEST";
-const POST_CARD_REQUEST_SUCCESSFUL = "POST_CARD_REQUEST_SUCCESSFUL";
-const POST_CARD_REQUEST_FAILED = "POST_CARD_REQUEST_FAILED";
+export const GET_CARD_REQUEST = "GET_CARD_REQUEST";
+export const GET_CARD_REQUEST_SUCCESSFUL = "GET_CARD_REQUEST_SUCCESSFUL";
+export const GET_CARD_REQUEST_FAILED = "GET_CARD_REQUEST_FAILED";
 
-const GET_CARD_REQUEST = "GET_CARD_REQUEST";
-const GET_CARD_REQUEST_SUCCESSFUL = "GET_CARD_REQUEST_SUCCESSFUL";
-const GET_CARD_REQUEST_FAILED = "GET_CARD_REQUEST_FAILED";
+export const postCardRequest = ({
+  cardNumber,
+  expiryDate,
+  cardName,
+  cvc,
+  token,
+}) => ({
+  type: POST_CARD_REQUEST,
+  payload: {
+    cardNumber,
+    expiryDate,
+    cardName,
+    cvc,
+    token,
+  },
+});
 
-export const postCardRequest = createAction(POST_CARD_REQUEST);
-export const postCardRequestSuccessful = createAction(
-  POST_CARD_REQUEST_SUCCESSFUL
-);
-export const postCardRequestFailed = createAction(POST_CARD_REQUEST_FAILED);
+export const postCardRequestSuccessful = ({
+  cardNumber,
+  expiryDate,
+  cardName,
+  cvc,
+}) => ({
+  type: POST_CARD_REQUEST_SUCCESSFUL,
+  payload: {
+    cardNumber,
+    expiryDate,
+    cardName,
+    cvc,
+  },
+});
 
-export const getCardRequest = createAction(GET_CARD_REQUEST);
-export const getCardRequestSuccessful = createAction(
-  GET_CARD_REQUEST_SUCCESSFUL
-);
-export const getCardRequestFailed = createAction(GET_CARD_REQUEST_FAILED);
+export const postCardRequestFailed = (error) => ({
+  type: POST_CARD_REQUEST_FAILED,
+  error,
+});
+
+export const getCardRequest = (token) => ({
+  type: GET_CARD_REQUEST,
+  token,
+});
+
+export const getCardRequestSuccessful = ({
+  cardNumber,
+  cardName,
+  expiryDate,
+  cvc,
+}) => ({
+  type: GET_CARD_REQUEST_SUCCESSFUL,
+  payload: {
+    cardNumber,
+    expiryDate,
+    cardName,
+    cvc,
+  },
+});
+
+export const getCardRequestFailed = (error) => ({
+  type: GET_CARD_REQUEST_FAILED,
+  error,
+});

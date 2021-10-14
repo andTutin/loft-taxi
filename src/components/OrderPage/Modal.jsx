@@ -2,11 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { OrderForm } from "./OrderForm";
 import OrderRequiresProfileData from "./OrderRequiresProfileData";
-import OrderConfirmed from "./OrderConfirmed";
-import { useAuth } from "../../modules/auth";
-import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper } from "@material-ui/core";
+import { useSelector } from "react-redux";
+import OrderConfirmed from "./OrderConfirmed";
 
 const useStyles = makeStyles((theme) => ({
   blockWrapper: {
@@ -20,37 +19,32 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const modalRoot = document.getElementById("modal-root");
-let modalComponent;
 
 const Modal = () => {
   const classes = useStyles();
-  const { token } = useAuth();
-  const { addressesList, route } = useSelector((state) => state);
-  const { isLoading } = useSelector((state) => state.flags);
+  const { addresses } = useSelector((state) => state.addressesList);
+  const { route } = useSelector((state) => state.route);
 
-  if (route.length) {
-    modalComponent = (
-      <Paper className={classes.blockWrapper}>
-        <OrderConfirmed />
-      </Paper>
-    );
-  } else if (addressesList.length) {
-    modalComponent = (
-      <Paper className={classes.blockWrapper}>
-        <OrderForm />
-      </Paper>
-    );
-  } else {
-    modalComponent = (
-      <Paper className={classes.blockWrapper}>
-        <OrderRequiresProfileData />
-      </Paper>
-    );
-  }
-
-  return token && !isLoading
-    ? ReactDOM.createPortal(modalComponent, modalRoot)
-    : null;
+  return route.length
+    ? ReactDOM.createPortal(
+        <Paper className={classes.blockWrapper}>
+          <OrderConfirmed />
+        </Paper>,
+        modalRoot
+      )
+    : addresses.length
+    ? ReactDOM.createPortal(
+        <Paper className={classes.blockWrapper}>
+          <OrderForm />
+        </Paper>,
+        modalRoot
+      )
+    : ReactDOM.createPortal(
+        <Paper className={classes.blockWrapper}>
+          <OrderRequiresProfileData />
+        </Paper>,
+        modalRoot
+      );
 };
 
 export default Modal;

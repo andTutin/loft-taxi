@@ -1,13 +1,10 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import {
-  routeRequest,
-  routeRequestSuccessful,
-  routeRequestFailed,
-} from "./actions";
+import { ROUTE_REQUEST } from ".";
+import { routeRequestSuccessful, routeRequestFailed } from "./actions";
 import { fetchRoute } from "./api";
 
 export function* routeSaga() {
-  yield takeLatest(routeRequest, function* (action) {
+  yield takeLatest(ROUTE_REQUEST, function* (action) {
     try {
       const result = yield call(fetchRoute, action.payload);
       if (result) {
@@ -15,8 +12,8 @@ export function* routeSaga() {
       } else {
         throw new Error(result.error);
       }
-    } catch (err) {
-      yield put(routeRequestFailed(err));
+    } catch (error) {
+      yield put(routeRequestFailed(error));
     }
   });
 }

@@ -1,13 +1,34 @@
-import { handleActions } from "redux-actions";
-import { addressesListRequestSuccessful } from "./actions";
+import {
+  ADDRESSES_LIST_REQUEST_SUCCESSFUL,
+  ADDRESSES_LIST_REQUEST_FAILED,
+} from "./actions";
+import { LOGOUT } from "../auth";
+const initialState = {
+  addresses: [],
+  error: null,
+};
 
-const addresses = JSON.parse(localStorage.getItem("addresses"));
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case ADDRESSES_LIST_REQUEST_SUCCESSFUL:
+      return {
+        ...state,
+        addresses: action.addresses,
+      };
 
-const addressesList = handleActions(
-  {
-    [addressesListRequestSuccessful]: (state, action) => action.payload,
-  },
-  addresses || []
-);
+    case ADDRESSES_LIST_REQUEST_FAILED:
+      return {
+        ...state,
+        error: action.error,
+      };
+    case LOGOUT:
+      return {
+        ...initialState,
+      };
 
-export default addressesList;
+    default:
+      return state;
+  }
+};
+
+export default reducer;

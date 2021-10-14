@@ -15,7 +15,7 @@ const Map = () => {
   const classes = useStyles();
   const mapContainer = useRef(null);
   const [map, setMap] = useState(null);
-  const { route: coordinates } = useSelector((state) => state);
+  const { route: coordinates } = useSelector((state) => state.route);
 
   useEffect(() => {
     if (map === null) {

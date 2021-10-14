@@ -7,10 +7,14 @@ import {
   registrationRequestSuccessful,
   registrationRequestFailed,
 } from "./actions";
+import { loadingStart, loadingDone } from "../flags/actions";
 import { fetchLogin, fetchRegistration } from "./api";
+import { getCardRequest } from "../payment";
 
 export function* authSaga() {
   yield takeLatest(LOGIN_REQUEST, function* (action) {
+    yield put(loadingStart());
+
     try {
       const result = yield call(fetchLogin, action.payload);
 
@@ -21,6 +25,8 @@ export function* authSaga() {
             token: result.token,
           })
         );
+
+        yield put(getCardRequest(result.token));
       } else {
         throw result.error;
       }
@@ -45,6 +51,8 @@ export function* authSaga() {
       }
     } catch (error) {
       yield put(registrationRequestFailed(error));
+    } finally {
+      yield put(loadingDone());
     }
   });
 }

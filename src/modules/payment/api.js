@@ -1,4 +1,4 @@
-export const fetchCardGet = ({ token }) => {
+export const fetchCardGet = (token) => {
   return fetch(`https://loft-taxi.glitch.me/card?token=${token}`, {
     method: "GET",
     headers: {

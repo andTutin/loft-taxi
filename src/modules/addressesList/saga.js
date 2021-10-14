@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import {
-  addressesListRequest,
+  ADDRESSES_LIST_REQUEST,
   addressesListRequestSuccessful,
   addressesListRequestFailed,
 } from "./actions";
@@ -8,20 +8,19 @@ import { loadingDone } from "../flags";
 import { fetchAddressesList } from "./api";
 
 export function* addressesListSaga() {
-  yield takeLatest(addressesListRequest, function* () {
+  yield takeLatest(ADDRESSES_LIST_REQUEST, function* () {
     try {
       const result = yield call(fetchAddressesList);
-      const addressesWithIds = result.addresses.map((addr) => {
-        return {
-          id: Math.trunc(Math.random() * 1e3),
-          address: addr,
-        };
-      });
-      localStorage.setItem("addresses", JSON.stringify(addressesWithIds));
+
+      const addressesWithIds = result.addresses.map((addr) => ({
+        id: Math.trunc(Math.random() * 1e3),
+        address: addr,
+      }));
+
       yield put(addressesListRequestSuccessful(addressesWithIds));
-      yield put(loadingDone());
-    } catch (err) {
-      yield put(addressesListRequestFailed(err));
+    } catch (error) {
+      yield put(addressesListRequestFailed(error));
+    } finally {
       yield put(loadingDone());
     }
   });

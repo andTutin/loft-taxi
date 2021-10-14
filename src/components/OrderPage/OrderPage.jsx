@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Header } from "../Header";
 import Map from "./Map/Map";
 import { useSelector } from "react-redux";
 import { Grid, CircularProgress } from "@material-ui/core";
 import Modal from "./Modal";
+import { useDispatch } from "react-redux";
+import { profileOpen } from "../../modules/flags";
 
 export const OrderPage = () => {
+  const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.flags);
+
+  useEffect(() => {
+    dispatch(profileOpen());
+  }, [dispatch]);
 
   if (isLoading) {
     return (

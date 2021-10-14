@@ -1,9 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import {
-  loginRequest,
-  registrationRequest,
-  logoutRequest,
-} from "../../modules/auth";
+import { loginRequest, registrationRequest, logoutRequest } from "./actions";
 
 export const useAuth = () => {
   const dispatch = useDispatch();

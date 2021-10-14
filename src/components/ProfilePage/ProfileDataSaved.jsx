@@ -1,8 +1,6 @@
 import { Paper, Grid, Typography, Button } from "@material-ui/core";
 import React from "react";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { profileOpen } from "../../modules/flags";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -15,12 +13,10 @@ const useStyles = makeStyles((theme) => ({
 const ProfileDataSaved = () => {
   const classes = useStyles();
   const history = useHistory();
-  const dispatch = useDispatch();
 
   const handleClick = (e) => {
     e.preventDefault();
     history.push("/map");
-    dispatch(profileOpen());
   };
 
   return (

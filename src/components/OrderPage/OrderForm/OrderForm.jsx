@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Grid, FormControl, Select, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import CarSelector from "./CarSelector";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { routeRequest } from "../../../modules/route";
+import useAddressesList from "../../../modules/addressesList/useAddressesList";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 export const OrderForm = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { addressesList: addresses } = useSelector((state) => state);
+  const { addresses } = useAddressesList();
   const [order, setOrder] = useState({
     from: "",
     where: "",
@@ -47,12 +48,14 @@ export const OrderForm = () => {
       status: status,
     });
   };
+
   const handleFromChange = (event) => {
     setOrder({
       ...order,
       from: event.target.value,
     });
   };
+
   const handleWhereChange = (event) => {
     setOrder({
       ...order,

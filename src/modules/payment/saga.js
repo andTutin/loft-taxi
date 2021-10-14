@@ -1,75 +1,52 @@
 import { call, put, takeLatest } from "redux-saga/effects";
+//import { loadingStart } from "../flags/actions";
 import {
-  getCardRequest,
+  GET_CARD_REQUEST,
   getCardRequestFailed,
   getCardRequestSuccessful,
-  postCardRequest,
+  POST_CARD_REQUEST,
   postCardRequestSuccessful,
   postCardRequestFailed,
 } from "./actions";
-import { addressesListRequest } from "../addressesList";
-import { loadingStart, loadingDone, profileClose } from "../flags";
 import { fetchCardGet, fetchCardPost } from "./api";
+import { addressesListRequest } from "../addressesList";
+import { loadingDone, profileClose } from "../flags";
 
 export function* paymentSaga() {
-  yield takeLatest(getCardRequest, function* (action) {
+  yield takeLatest(GET_CARD_REQUEST, function* (action) {
     try {
-      const result = yield call(fetchCardGet, action.payload);
-      if (result) {
-        localStorage.setItem(
-          "card",
-          JSON.stringify({
-            cardNumber: result.cardNumber,
-            expiryDate: result.expiryDate,
-            cardName: result.cardName,
-            cvc: result.cvc,
-          })
+      const result = yield call(fetchCardGet, action.token);
+      console.log(result);
+      if (result.id) {
+        const { cardNumber, cardName, expiryDate, cvc } = result;
+
+        yield put(
+          getCardRequestSuccessful({ cardNumber, cardName, expiryDate, cvc })
         );
-        yield put(getCardRequestSuccessful(result));
+
         yield put(addressesListRequest());
       } else {
-        throw new Error(result.error);
+        throw result.error;
       }
-    } catch (err) {
-      yield put(getCardRequestFailed(err));
+    } catch (error) {
+      yield put(getCardRequestFailed(error));
       yield put(loadingDone());
     }
   });
 
-  yield takeLatest(postCardRequest, function* (action) {
-    yield put(loadingStart());
+  yield takeLatest(POST_CARD_REQUEST, function* (action) {
     try {
       const result = yield call(fetchCardPost, action.payload);
+
       if (result.success) {
-        localStorage.setItem(
-          "card",
-          JSON.stringify({
-            cardNumber: action.payload.cardNumber,
-            expiryDate: action.payload.expiryDate,
-            cardName: action.payload.cardName,
-            cvc: action.payload.cvc,
-          })
-        );
-        yield put(
-          postCardRequestSuccessful({
-            cardNumber: action.payload.cardNumber,
-            expiryDate: action.payload.expiryDate,
-            cardName: action.payload.cardName,
-            cvc: action.payload.cvc,
-          })
-        );
+        yield put(postCardRequestSuccessful({ ...action.payload }));
+        yield put(addressesListRequest());
         yield put(profileClose());
-        if (!localStorage.getItem("addresses")) {
-          yield put(addressesListRequest());
-        } else {
-          yield put(loadingDone());
-        }
       } else {
-        throw new Error(result.error);
+        throw result.error;
       }
-    } catch (err) {
-      yield put(postCardRequestFailed(err));
-      yield put(loadingDone());
+    } catch (error) {
+      yield put(postCardRequestFailed(error));
     }
   });
 }

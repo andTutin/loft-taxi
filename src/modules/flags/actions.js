@@ -1,13 +1,21 @@
-import { createAction } from "redux-actions";
+export const LOADING_START = "LOADING_START";
+export const LOADING_DONE = "LOADING_DONE";
 
-const LOADING_START = "LOADING_START";
-const LOADING_DONE = "LOADING_DONE";
+export const PROFILE_OPEN = "PROFILE_OPEN";
+export const PROFILE_CLOSE = "PROFILE__CLOSE";
 
-const PROFILE_OPEN = "PROFILE_OPEN";
-const PROFILE_CLOSE = "PROFILE__CLOSE";
+export const loadingStart = () => ({
+  type: LOADING_START,
+});
 
-export const loadingStart = createAction(LOADING_START);
-export const loadingDone = createAction(LOADING_DONE);
+export const loadingDone = () => ({
+  type: LOADING_DONE,
+});
 
-export const profileOpen = createAction(PROFILE_OPEN);
-export const profileClose = createAction(PROFILE_CLOSE);
+export const profileOpen = () => ({
+  type: PROFILE_OPEN,
+});
+
+export const profileClose = () => ({
+  type: PROFILE_CLOSE,
+});
