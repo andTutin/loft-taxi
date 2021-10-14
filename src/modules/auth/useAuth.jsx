@@ -2,12 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   loginRequest,
   registrationRequest,
-  logoutButtonPressed,
+  logoutRequest,
 } from "../../modules/auth";
 
 export const useAuth = () => {
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
+  const { token, error } = useSelector((state) => state.auth);
 
   const login = ({ email, password }) => {
     dispatch(loginRequest({ email, password }));
@@ -25,8 +25,8 @@ export const useAuth = () => {
   };
 
   const logout = () => {
-    dispatch(logoutButtonPressed());
+    dispatch(logoutRequest());
   };
 
-  return { token, login, registration, logout };
+  return { token, login, registration, logout, error };
 };

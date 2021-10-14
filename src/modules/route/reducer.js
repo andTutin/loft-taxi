@@ -4,14 +4,14 @@ import {
   routeRequestFailed,
   routeReset,
 } from "./actions";
-import { logout } from "../auth";
+import { logoutRequest } from "../auth";
 
 const route = handleActions(
   {
     [routeRequestSuccessful]: (state, action) => action.payload,
     [routeRequestFailed]: () => [],
     [routeReset]: () => [],
-    [logout]: () => [],
+    [logoutRequest]: () => [],
   },
   []
 );

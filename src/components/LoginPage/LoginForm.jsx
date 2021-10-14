@@ -1,8 +1,7 @@
 import React from "react";
 import { Grid, Paper, Typography, TextField, Button } from "@material-ui/core/";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../modules/auth";
-import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm, Controller } from "react-hook-form";
 
@@ -21,14 +20,8 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginForm = () => {
   const classes = useStyles();
-  const { token, login } = useAuth();
-  const { error } = useSelector((state) => state);
-  const methods = useForm();
-  const { handleSubmit, control, errors } = methods;
-
-  if (token) {
-    return <Redirect to="/map" />;
-  }
+  const { login, error } = useAuth();
+  const { handleSubmit, control, errors } = useForm();
 
   return (
     <Paper className={classes.formWrapper}>
