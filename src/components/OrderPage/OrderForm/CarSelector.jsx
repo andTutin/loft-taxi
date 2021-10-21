@@ -2,9 +2,7 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Car from "./Car";
-import standart from "../../../assets/cars/standart.png";
-import premium from "../../../assets/cars/premium.png";
-import business from "../../../assets/cars/business.png";
+import tariffs from "./tariffs";
 
 const useStyles = makeStyles((theme) => ({
   cardsBlock: {
@@ -15,11 +13,6 @@ const useStyles = makeStyles((theme) => ({
 
 const CarSelector = ({ status, setStatus }) => {
   const classes = useStyles();
-  const checkActive = (card) => (card === status ? true : false);
-
-  const cardClickHandler = (card) => {
-    setStatus(card);
-  };
 
   return (
     <Grid
@@ -31,29 +24,16 @@ const CarSelector = ({ status, setStatus }) => {
       spacing={3}
       className={classes.cardsBlock}
     >
-      <Car
-        status="Стандарт"
-        price="150"
-        car={standart}
-        isActive={checkActive("Стандарт")}
-        setActive={cardClickHandler}
-      />
-      <Car
-        status="Премиум"
-        price="250"
-        car={premium}
-        isActive={checkActive("Премиум")}
-        setActive={cardClickHandler}
-      />
-      <Car
-        status="Бизнес"
-        price="350"
-        car={business}
-        isActive={checkActive("Бизнес")}
-        setActive={cardClickHandler}
-      />
+      {tariffs.map((t) => (
+        <Car
+          key={t.id}
+          {...t}
+          isActive={t.status === status}
+          setStatus={setStatus}
+        />
+      ))}
     </Grid>
   );
 };
 
-export default CarSelector;
+export default React.memo(CarSelector);

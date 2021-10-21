@@ -1,9 +1,6 @@
-import React, { useState } from "react";
-import { Grid, FormControl, Select, Button } from "@material-ui/core";
+import React from "react";
+import { FormControl, Select } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import CarSelector from "./CarSelector";
-import { useDispatch } from "react-redux";
-import { routeRequest } from "../../../modules/route";
 import useAddressesList from "../../../modules/addressesList/useAddressesList";
 
 const useStyles = makeStyles((theme) => ({
@@ -32,57 +29,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const OrderForm = () => {
+const RouteSelector = ({ from, setFrom, to, setTo }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const { addresses } = useAddressesList();
-  const [order, setOrder] = useState({
-    from: "",
-    where: "",
-    status: "Стандарт",
-  });
-
-  const setStatus = (status) => {
-    setOrder({
-      ...order,
-      status: status,
-    });
-  };
-
-  const handleFromChange = (event) => {
-    setOrder({
-      ...order,
-      from: event.target.value,
-    });
-  };
-
-  const handleWhereChange = (event) => {
-    setOrder({
-      ...order,
-      where: event.target.value,
-    });
-  };
-
-  const clickHandler = () => {
-    dispatch(routeRequest({ address1: order.from, address2: order.where }));
-  };
 
   return (
-    <Grid container direction="column">
+    <>
       <FormControl className={classes.formControl}>
         <Select
           native
           labelId="from"
           id="from"
-          defaultValue={order.from}
-          onChange={handleFromChange}
+          defaultValue={from}
+          onChange={setFrom}
           label="from"
         >
           <option value="" disabled>
             Откуда
           </option>
           {addresses
-            .filter((item) => item.address !== order.where)
+            .filter((item) => item.address !== to)
             .map((item) => {
               return (
                 <option key={item.id} value={item.address}>
@@ -97,15 +63,15 @@ export const OrderForm = () => {
           native
           labelId="where"
           id="where"
-          defaultValue={order.where}
-          onChange={handleWhereChange}
+          defaultValue={to}
+          onChange={setTo}
           label="where"
         >
           <option value="" disabled>
             Куда
           </option>
           {addresses
-            .filter((item) => item.address !== order.from)
+            .filter((item) => item.address !== from)
             .map((item) => {
               return (
                 <option key={item.id} value={item.address}>
@@ -115,14 +81,8 @@ export const OrderForm = () => {
             })}
         </Select>
       </FormControl>
-      <CarSelector status={order.status} setStatus={setStatus} />
-      <Button
-        variant="contained"
-        disabled={order.from && order.where ? false : true}
-        onClick={clickHandler}
-      >
-        Заказать
-      </Button>
-    </Grid>
+    </>
   );
 };
+
+export default React.memo(RouteSelector);

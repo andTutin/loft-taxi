@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { OrderForm } from "./OrderForm";
+import OrderForm from "./OrderForm";
 import OrderRequiresProfileData from "./OrderRequiresProfileData";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper } from "@material-ui/core";

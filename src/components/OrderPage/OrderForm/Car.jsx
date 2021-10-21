@@ -26,22 +26,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Card = ({ status, price, car, isActive, setActive }) => {
+const Car = ({ status, price, img, isActive, setStatus }) => {
   const classes = useStyles();
 
   return (
     <Grid item container direction="column" className={classes.cardWrapper}>
       <Paper
         className={isActive ? classes.card : classes.cardNotActive}
-        onClick={() => setActive(status)}
+        onClick={() => setStatus(status)}
       >
         <Typography variant="h6">{status}</Typography>
         <Typography variant="body2">Стоимость</Typography>
         <Typography variant="subtitle1">{price}&#x20bd;</Typography>
-        <img src={car} alt="Автомобиль" className={classes.carImg} />
+        <img src={img} alt="Автомобиль" className={classes.carImg} />
       </Paper>
     </Grid>
   );
 };
 
-export default Card;
+export default React.memo(Car);
