@@ -17,7 +17,13 @@ const OrderForm = () => {
   } = useOrderForm();
 
   return (
-    <Grid component="form" onSubmit={handleSubmit} container direction="column">
+    <Grid
+      component="form"
+      onSubmit={handleSubmit}
+      container
+      direction="column"
+      style={{ width: "auto", padding: "10px" }}
+    >
       <RouteSelector
         from={from}
         setFrom={handleFromChange}

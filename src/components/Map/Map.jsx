@@ -1,18 +1,20 @@
 import React, { useRef, useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Grid } from "@material-ui/core";
+//import { makeStyles } from "@material-ui/core/styles";
+//import { Grid } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { mapHasRoute, removeRoute, drawRoute } from "./scripts";
 var mapboxgl = require("mapbox-gl/dist/mapbox-gl.js");
 
+/*
 const useStyles = makeStyles((theme) => ({
   mapZindex: {
     zIndex: "100",
   },
 }));
+*/
 
 const Map = () => {
-  const classes = useStyles();
+  //const classes = useStyles();
   const mapContainer = useRef(null);
   const [map, setMap] = useState(null);
   const { route: coordinates } = useSelector((state) => state.route);
@@ -39,11 +41,7 @@ const Map = () => {
     }
   }, [map, coordinates]);
 
-  return (
-    <Grid item xs container direction="column" className={classes.mapZindex}>
-      <Grid component="div" item xs ref={mapContainer}></Grid>
-    </Grid>
-  );
+  return <div ref={mapContainer} style={{ height: "100%", flex: 1 }}></div>;
 };
 
 export default React.memo(Map);

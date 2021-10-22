@@ -16,7 +16,6 @@ export function* paymentSaga() {
   yield takeLatest(GET_CARD_REQUEST, function* (action) {
     try {
       const result = yield call(fetchCardGet, action.token);
-      console.log(result);
       if (result.id) {
         const { cardNumber, cardName, expiryDate, cvc } = result;
 

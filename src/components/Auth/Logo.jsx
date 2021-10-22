@@ -1,7 +1,7 @@
 import React from "react";
-import logoAuth from "../assets/logos/logoAuth.svg";
-import { Grid } from "@material-ui/core/";
+import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
+import logoAuth from "../../assets/logos/logoAuth.svg";
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AuthPagesLogo = () => {
+const Logo = () => {
   const classes = useStyles();
 
   return (
@@ -27,4 +27,4 @@ const AuthPagesLogo = () => {
   );
 };
 
-export default AuthPagesLogo;
+export default React.memo(Logo);

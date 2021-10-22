@@ -28,8 +28,8 @@ const Nav = () => {
 
   return (
     <Grid item xs={2} container justify="space-between">
-      <Link to="/map" className={setClassName("map")}>
-        Карта
+      <Link to="/order" className={setClassName("order")}>
+        Заказ
       </Link>
       <Link to="/profile" className={setClassName("profile")}>
         Профиль
