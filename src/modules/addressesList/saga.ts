@@ -10,16 +10,19 @@ import { fetchAddressesList } from "./api";
 export function* addressesListSaga() {
   yield takeLatest(ADDRESSES_LIST_REQUEST, function* () {
     try {
-      const result = yield call(fetchAddressesList);
+      const result: { addresses: string[] } = yield call(fetchAddressesList);
 
-      const addressesWithIds = result.addresses.map((addr) => ({
-        id: Math.trunc(Math.random() * 1e3),
-        address: addr,
-      }));
+      const addressesWithIds: Array<{ id: number; address: string }> =
+        result.addresses.map((addr: string) => ({
+          id: Math.trunc(Math.random() * 1e3),
+          address: addr,
+        }));
 
       yield put(addressesListRequestSuccessful(addressesWithIds));
     } catch (error) {
-      yield put(addressesListRequestFailed(error));
+      yield put(
+        addressesListRequestFailed("Не удалось загрузить список адресов.")
+      );
     } finally {
       yield put(loadingDone());
     }

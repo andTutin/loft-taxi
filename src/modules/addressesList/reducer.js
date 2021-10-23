@@ -2,7 +2,7 @@ import {
   ADDRESSES_LIST_REQUEST_SUCCESSFUL,
   ADDRESSES_LIST_REQUEST_FAILED,
 } from "./actions";
-import { LOGOUT } from "../auth";
+import { authActions } from "../auth/types";
 const initialState = {
   addresses: [],
   error: null,
@@ -21,7 +21,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         error: action.error,
       };
-    case LOGOUT:
+
+    case authActions.LOGOUT:
       return {
         ...initialState,
       };

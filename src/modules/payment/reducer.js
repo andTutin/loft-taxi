@@ -4,7 +4,7 @@ import {
   GET_CARD_REQUEST_SUCCESSFUL,
   POST_CARD_REQUEST_FAILED,
 } from "./actions";
-import { LOGOUT } from "../auth";
+import { authActions } from "../auth/types";
 const initialState = {
   cardNumber: null,
   cardName: null,
@@ -45,10 +45,11 @@ const reducer = (state = initialState, action) => {
         error: action.error,
       };
 
-    case LOGOUT:
+    case authActions.LOGOUT:
       return {
         ...initialState,
       };
+
     default:
       return state;
   }

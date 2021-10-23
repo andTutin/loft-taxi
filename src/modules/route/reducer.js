@@ -1,5 +1,5 @@
 import { ROUTE_REQUEST_FAILED, ROUTE_REQUEST_SUCCESSFUL, ROUTE_RESET } from ".";
-import { LOGOUT } from "../auth";
+import { authActions } from "../auth/types";
 const initialState = {
   route: [],
   error: null,
@@ -23,7 +23,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...initialState,
       };
-    case LOGOUT:
+
+    case authActions.LOGOUT:
       return {
         ...initialState,
       };

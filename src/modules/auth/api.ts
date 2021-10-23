@@ -1,4 +1,13 @@
-export const fetchLogin = ({ email, password }) => {
+import { ILoginData, IRegistrationData } from "./types";
+
+export const fetchLogin = ({
+  email,
+  password,
+}: ILoginData): Promise<{
+  success: boolean;
+  token?: string;
+  error?: string;
+}> => {
   return fetch("https://loft-taxi.glitch.me/auth", {
     method: "POST",
     headers: {
@@ -11,7 +20,16 @@ export const fetchLogin = ({ email, password }) => {
   }).then((response) => response.json());
 };
 
-export const fetchRegistration = ({ email, password, name, surname }) => {
+export const fetchRegistration = ({
+  email,
+  password,
+  name,
+  surname,
+}: IRegistrationData): Promise<{
+  success: boolean;
+  token?: string;
+  error?: string;
+}> => {
   return fetch("https://loft-taxi.glitch.me/register", {
     method: "POST",
     headers: {

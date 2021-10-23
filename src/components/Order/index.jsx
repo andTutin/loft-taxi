@@ -5,12 +5,12 @@ import { useSelector } from "react-redux";
 import OrderConfirmed from "../Order/OrderConfirmed";
 
 const Order = () => {
-  const { addresses } = useSelector((state) => state.addressesList);
   const { route } = useSelector((state) => state.route);
+  const { cardNumber } = useSelector((state) => state.payment);
 
   return route.length ? (
     <OrderConfirmed />
-  ) : addresses.length ? (
+  ) : cardNumber ? (
     <OrderForm />
   ) : (
     <OrderRequiresProfileData />

@@ -1,6 +1,6 @@
 import { PROFILE_CLOSE, PROFILE_OPEN } from ".";
 import { LOADING_START, LOADING_DONE } from "./actions";
-import { LOGOUT } from "../auth";
+import { authActions } from "../auth/types";
 
 const initialState = {
   isLoading: false,
@@ -35,7 +35,7 @@ const reducer = (state = initialState, action) => {
       };
     }
 
-    case LOGOUT:
+    case authActions.LOGOUT:
       return {
         ...initialState,
       };

@@ -1,4 +1,4 @@
-export const fetchAddressesList = () => {
+export const fetchAddressesList = (): Promise<{ addresses: string[] }> => {
   return fetch("https://loft-taxi.glitch.me/addressList", {
     method: "GET",
     headers: {
