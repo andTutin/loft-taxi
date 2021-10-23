@@ -1,14 +1,14 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import {
-  ADDRESSES_LIST_REQUEST,
   addressesListRequestSuccessful,
   addressesListRequestFailed,
 } from "./actions";
+import { addressesListActions } from "./types";
 import { loadingDone } from "../flags";
 import { fetchAddressesList } from "./api";
 
 export function* addressesListSaga() {
-  yield takeLatest(ADDRESSES_LIST_REQUEST, function* () {
+  yield takeLatest(addressesListActions.ADDRESSES_LIST_REQUEST, function* () {
     try {
       const result: { addresses: string[] } = yield call(fetchAddressesList);
 

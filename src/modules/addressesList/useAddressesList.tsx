@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
 const useAddressesList = () => {
-  const { addresses } = useSelector((state) => state.addressesList);
+  const { addresses } = useSelector((state: any) => state.addressesList);
 
   return { addresses };
 };
