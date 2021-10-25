@@ -1,4 +1,6 @@
-export const fetchCardGet = (token) => {
+import { CardData } from "./types";
+
+export const fetchCardGet = (token: string): Promise<CardData> => {
   return fetch(`https://loft-taxi.glitch.me/card?token=${token}`, {
     method: "GET",
     headers: {
@@ -13,7 +15,7 @@ export const fetchCardPost = ({
   cardName,
   cvc,
   token,
-}) => {
+}: CardData & { token: string }) => {
   return fetch("https://loft-taxi.glitch.me/card", {
     method: "POST",
     headers: {

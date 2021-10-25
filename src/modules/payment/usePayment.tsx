@@ -1,16 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../auth";
-import { postCardRequest } from "../../modules/payment";
+import { postCardRequest } from ".";
+import { CardData } from "./types";
 
 export const usePayment = () => {
   const dispatch = useDispatch();
   const { token } = useAuth();
 
-  const { cardNumber, cardName, expiryDate, cvc } = useSelector(
-    (state) => state.payment
+  const { cardNumber, cardName, expiryDate, cvc }: CardData = useSelector(
+    (state: any) => state.payment
   );
 
-  const sendCard = ({ cardNumber, cardName, expiryDate, cvc }) => {
+  const sendCard = ({ cardNumber, cardName, expiryDate, cvc } : CardData) => {
     dispatch(
       postCardRequest({
         cardNumber,

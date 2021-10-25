@@ -1,11 +1,13 @@
-import { POST_CARD_REQUEST_SUCCESSFUL } from ".";
-import {
-  GET_CARD_REQUEST_FAILED,
-  GET_CARD_REQUEST_SUCCESSFUL,
-  POST_CARD_REQUEST_FAILED,
-} from "./actions";
-import { authActions } from "../auth/types";
-const initialState = {
+import { paymentActions } from "./types";
+
+export interface PaymentState {
+  cardNumber: string | null;
+  cardName: string | null;
+  cvc: string | number | null;
+  expiryDate: string | null;
+  error: string | null;
+}
+const initialState: PaymentState = {
   cardNumber: null,
   cardName: null,
   cvc: null,
@@ -13,9 +15,12 @@ const initialState = {
   error: null,
 };
 
-const reducer = (state = initialState, action) => {
+const reducer = (
+  state: PaymentState = initialState,
+  action: any
+): PaymentState => {
   switch (action.type) {
-    case GET_CARD_REQUEST_SUCCESSFUL:
+    case paymentActions.GET_CARD_REQUEST_SUCCESSFUL:
       return {
         ...state,
         cardNumber: action.payload.cardNumber,
@@ -24,13 +29,13 @@ const reducer = (state = initialState, action) => {
         cvc: action.payload.cvc,
       };
 
-    case GET_CARD_REQUEST_FAILED:
+    case paymentActions.GET_CARD_REQUEST_FAILED:
       return {
         ...state,
         error: action.error,
       };
 
-    case POST_CARD_REQUEST_SUCCESSFUL:
+    case paymentActions.POST_CARD_REQUEST_SUCCESSFUL:
       return {
         ...state,
         cardNumber: action.payload.cardNumber,
@@ -39,15 +44,10 @@ const reducer = (state = initialState, action) => {
         cvc: action.payload.cvc,
       };
 
-    case POST_CARD_REQUEST_FAILED:
+    case paymentActions.POST_CARD_REQUEST_FAILED:
       return {
         ...state,
         error: action.error,
-      };
-
-    case authActions.LOGOUT:
-      return {
-        ...initialState,
       };
 
     default:
