@@ -1,44 +1,42 @@
-import { PROFILE_CLOSE, PROFILE_OPEN } from ".";
-import { LOADING_START, LOADING_DONE } from "./actions";
-import { authActions } from "../auth/types";
+import { FlagsAction, flagsActions } from "./types";
 
-const initialState = {
+export type FlagsState = {
+  isLoading: boolean;
+  isProfileOpened: boolean;
+};
+
+const initialState: FlagsState = {
   isLoading: false,
   isProfileOpened: true,
 };
 
-const reducer = (state = initialState, action) => {
+const reducer = (state = initialState, action: FlagsAction) => {
   switch (action.type) {
-    case LOADING_START:
+    case flagsActions.LOADING_START:
       return {
         ...state,
         isLoading: true,
       };
 
-    case LOADING_DONE:
+    case flagsActions.LOADING_DONE:
       return {
         ...state,
         isLoading: false,
       };
 
-    case PROFILE_OPEN: {
+    case flagsActions.PROFILE_OPEN: {
       return {
         ...state,
         isProfileOpened: true,
       };
     }
 
-    case PROFILE_CLOSE: {
+    case flagsActions.PROFILE_CLOSE: {
       return {
         ...state,
         isProfileOpened: false,
       };
     }
-
-    case authActions.LOGOUT:
-      return {
-        ...initialState,
-      };
 
     default:
       return state;
