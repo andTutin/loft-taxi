@@ -13,7 +13,7 @@ const initialState: AddressesListState = {
 const reducer = (
   state: AddressesListState = initialState,
   action: AddressesListAction
-) => {
+): AddressesListState => {
   switch (action.type) {
     case addressesListActions.ADDRESSES_LIST_REQUEST_SUCCESSFUL:
       return {

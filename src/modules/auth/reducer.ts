@@ -1,20 +1,20 @@
 import { authActions, AuthAction } from "./types";
 
-export interface DefaultRootState {
+interface AuthState {
   email: string | null;
   token: string | null;
   error: string | null;
 }
-const initialState: DefaultRootState = {
+const initialState: AuthState = {
   email: null,
   token: null,
   error: null,
 };
 
 const reducer = (
-  state: DefaultRootState = initialState,
+  state: AuthState = initialState,
   action: AuthAction
-): DefaultRootState => {
+): AuthState => {
   switch (action.type) {
     case authActions.LOGIN_REQUEST_SUCCESSFUL:
       return {
@@ -47,8 +47,4 @@ const reducer = (
   }
 };
 
-export const tokenSelector = (state: DefaultRootState): string | null =>
-  state.token;
-export const errorSelector = (state: DefaultRootState): string | null =>
-  state.error;
 export default reducer;
